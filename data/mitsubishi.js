@@ -69,6 +69,55 @@
       ]
     },
     {
+      id: 'xpander-cross',
+      name: 'Xpander Cross',
+      type: 'MPV lai SUV 7 chỗ',
+      common: {
+        specs: {
+          'Động cơ': 'MIVEC 1.5L, 4 xi-lanh',
+          'Công suất': '104 hp @ 6.000 rpm',
+          'Mô-men xoắn': '141 Nm @ 4.000 rpm',
+          'Hộp số': 'Tự động 4 cấp',
+          'Dẫn động': 'FWD (cầu trước)',
+          'Nhiên liệu': 'Xăng',
+          'Số chỗ ngồi': '7',
+          'Kích thước D x R x C': '4.500 x 1.800 x 1.750 mm',
+          'Chiều dài cơ sở': '2.775 mm',
+          'Khoảng sáng gầm': '225 mm',
+          'Dung tích bình xăng': '45 L',
+          'Phanh': 'Đĩa trước / tang trống sau',
+          'Mâm / lốp': '17 inch, 205/55R17'
+        },
+        interior: {
+          'Chất liệu ghế': 'Da tổng hợp',
+          'Ghế lái': 'Chỉnh tay 6 hướng',
+          'Màn hình giải trí': '9 inch',
+          'Màn hình táp-lô': 'Đồng hồ analog + LCD 4.2 inch',
+          'Điều hòa': 'Tự động, cửa gió hàng 2',
+          'Vô lăng': 'Bọc da, chỉnh 4 hướng',
+          'Hệ thống loa': '6 loa',
+          'Cửa gió hàng ghế sau': true,
+          'Cửa sổ trời': false
+        },
+        features: {
+          'Túi khí': '4 túi khí',
+          'Cân bằng điện tử ESC': true,
+          'Hỗ trợ khởi hành ngang dốc HAC': true,
+          'Camera lùi': '360 độ',
+          'Cảm biến đỗ xe': 'Trước & sau',
+          'Cruise control': true,
+          'Cảm biến áp suất lốp TPMS': true,
+          'Đèn pha': 'LED',
+          'Chìa khóa thông minh & Start/Stop': true,
+          'Sạc không dây': false,
+          'Kết nối Apple CarPlay / Android Auto': true
+        }
+      },
+      variants: [
+        { name: 'Cross', price: 699 }
+      ]
+    },
+    {
       id: 'xforce',
       name: 'Xforce',
       type: 'SUV hạng B',

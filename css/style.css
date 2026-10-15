@@ -201,3 +201,14 @@ td.na { color: var(--muted); }
 }
 th .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 .col-title { color: var(--muted); }
+
+/* ---- ưu / nhược điểm ---- */
+.opinions td.opinion { vertical-align: top; }
+.opinion ul { margin: 0; padding-left: 18px; }
+.opinion li { margin: 0 0 6px; }
+.opinion.pro li::marker { color: var(--yes); }
+.opinion.con li::marker { color: var(--no); }
+.opinion.sources a { color: var(--accent); word-break: break-word; }
+.opinion.note { color: var(--muted); font-size: 14px; }
+.opinion.na { color: var(--muted); }
+.price-source { margin: 0 0 8px; color: var(--accent); font-weight: 600; }

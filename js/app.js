@@ -147,12 +147,18 @@
     return out;
   }
 
+  function reviewFor(entry) {
+    var all = window.CAR_REVIEWS || {};
+    return all[entry.brand.id + '|' + entry.model.id + '|' + entry.variant.name] || null;
+  }
+
   function toColumn(entry, withTitle) {
     return {
       title: withTitle ? entry.brand.name + ' ' + entry.model.name : '',
       color: entry.brand.color,
       name: entry.variant.name,
       price: entry.variant.price,
+      review: reviewFor(entry),
       data: {
         specs: mergedGroup(entry.model, entry.variant, 'specs'),
         interior: mergedGroup(entry.model, entry.variant, 'interior'),
@@ -167,6 +173,107 @@
     } catch (e) {
       /* file:// or sandboxed contexts may refuse replaceState; the view is already rendered */
     }
+  }
+
+  /* ---------- giá động từ Google Sheet (CSV) ---------- */
+
+  function normName(str) {
+    return String(str || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/gi, 'd')
+      .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  function parseCsv(text) {
+    var rows = [];
+    var row = [];
+    var cell = '';
+    var inQuotes = false;
+    var i;
+    for (i = 0; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (inQuotes) {
+        if (ch === '"') {
+          if (text.charAt(i + 1) === '"') { cell += '"'; i += 1; }
+          else inQuotes = false;
+        } else cell += ch;
+      } else if (ch === '"') inQuotes = true;
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && text.charAt(i + 1) === '\n') i += 1;
+        row.push(cell); cell = '';
+        rows.push(row); row = [];
+      } else cell += ch;
+    }
+    if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  // Chấp nhận "839", "839 triệu", "1.099" (tỷ ghi theo nghìn) hoặc 1.099.000.000 (đồng).
+  function parsePriceMillion(raw) {
+    var digits = String(raw || '').replace(/[^\d]/g, '');
+    if (!digits) return null;
+    var n = parseInt(digits, 10);
+    if (digits.length >= 7) n = Math.round(n / 1000000);
+    return n > 0 ? n : null;
+  }
+
+  function applyLivePrices(csvText) {
+    var rows = parseCsv(csvText).filter(function (r) { return r.some(function (c) { return c.trim() !== ''; }); });
+    if (rows.length < 2) return 0;
+    var head = rows[0].map(normName);
+    function col(test, fallback) {
+      var idx = -1;
+      head.forEach(function (name, i) { if (idx === -1 && test(name)) idx = i; });
+      return idx === -1 ? fallback : idx;
+    }
+    var cBrand = col(function (n) { return n.indexOf('hang') === 0 || n === 'brand'; }, 0);
+    var cModel = col(function (n) { return n.indexOf('mau') === 0 || n === 'model'; }, 1);
+    var cVariant = col(function (n) { return n.indexOf('phien ban') === 0 || n === 'variant'; }, 2);
+    var cPrice = col(function (n) { return n.indexOf('gia') === 0 || n === 'price'; }, 3);
+
+    var byKey = {};
+    allEntries().forEach(function (e) {
+      byKey[normName(e.brand.name) + '|' + normName(e.model.name) + '|' + normName(e.variant.name)] = e;
+    });
+
+    var applied = 0;
+    rows.slice(1).forEach(function (r) {
+      var key = normName(r[cBrand]) + '|' + normName(r[cModel]) + '|' + normName(r[cVariant]);
+      var price = parsePriceMillion(r[cPrice]);
+      if (byKey[key] && price) {
+        byKey[key].variant.price = price;
+        applied += 1;
+      }
+    });
+    return applied;
+  }
+
+  function loadLivePrices() {
+    var url = (window.CAR_CONFIG && window.CAR_CONFIG.priceSheetCsvUrl) || '';
+    var badge = document.getElementById('priceSource');
+    if (!url || !window.fetch) return;
+    fetch(url, { cache: 'no-store' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function (text) {
+        var applied = applyLivePrices(text);
+        if (badge) {
+          badge.hidden = false;
+          badge.textContent = applied
+            ? 'Giá đang lấy từ Google Sheet (' + applied + ' phiên bản đã cập nhật).'
+            : 'Không khớp được dòng nào trong Google Sheet; đang dùng giá có sẵn.';
+        }
+        if (applied) applyHash();
+      })
+      .catch(function () {
+        if (badge) {
+          badge.hidden = false;
+          badge.textContent = 'Không tải được Google Sheet; đang dùng giá có sẵn.';
+        }
+      });
   }
 
   /* ---------- shared comparison table ---------- */
@@ -226,6 +333,76 @@
         : h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), tbody])]);
       container.appendChild(h('div', { 'class': 'group' }, [h('h3', { text: g.title }), body]));
     });
+
+    renderReviews(container, columns, makeHead);
+  }
+
+  function listCell(items, cls) {
+    var td = h('td', { 'class': 'opinion ' + cls });
+    if (!items || !items.length) {
+      td.className += ' na';
+      td.textContent = '—';
+      return td;
+    }
+    var ul = h('ul');
+    items.forEach(function (t) { ul.appendChild(h('li', { text: t })); });
+    td.appendChild(ul);
+    return td;
+  }
+
+  function reviewRow(label, columns, pick, cls) {
+    var tr = h('tr', null, [h('th', { text: label })]);
+    columns.forEach(function (c) { tr.appendChild(listCell(c.review ? pick(c.review) : null, cls)); });
+    return tr;
+  }
+
+  function renderReviews(container, columns, makeHead) {
+    if (!columns.some(function (c) { return c.review; })) return;
+
+    var sourcesRow = h('tr', null, [h('th', { text: 'Nguồn tham khảo' })]);
+    var noteRow = h('tr', null, [h('th', { text: 'Lưu ý' })]);
+    var hasNote = false;
+    columns.forEach(function (c) {
+      var r = c.review && c.review.research;
+      var td = h('td', { 'class': 'opinion sources' });
+      if (r && r.sources && r.sources.length) {
+        var ul = h('ul');
+        r.sources.forEach(function (src) {
+          ul.appendChild(h('li', null, [h('a', { href: src.url, target: '_blank', rel: 'noopener noreferrer', text: src.name })]));
+        });
+        td.appendChild(ul);
+      } else {
+        td.className += ' na';
+        td.textContent = '—';
+      }
+      sourcesRow.appendChild(td);
+
+      var noteTd = h('td', { 'class': 'opinion note' });
+      if (r && r.note) { noteTd.textContent = r.note; hasNote = true; }
+      else { noteTd.className += ' na'; noteTd.textContent = '—'; }
+      noteRow.appendChild(noteTd);
+    });
+
+    var ownerBody = h('tbody', null, [
+      reviewRow('Ưu điểm', columns, function (r) { return r.owner && r.owner.pros; }, 'pro'),
+      reviewRow('Nhược điểm', columns, function (r) { return r.owner && r.owner.cons; }, 'con')
+    ]);
+    var researchRows = [
+      reviewRow('Ưu điểm', columns, function (r) { return r.research && r.research.pros; }, 'pro'),
+      reviewRow('Nhược điểm', columns, function (r) { return r.research && r.research.cons; }, 'con'),
+      sourcesRow
+    ];
+    if (hasNote) researchRows.push(noteRow);
+    var researchBody = h('tbody', null, researchRows);
+
+    container.appendChild(h('div', { 'class': 'group opinions' }, [
+      h('h3', { text: 'Ý kiến của bạn (từ file đánh giá cá nhân)' }),
+      h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), ownerBody])])
+    ]));
+    container.appendChild(h('div', { 'class': 'group opinions' }, [
+      h('h3', { text: 'Tổng hợp từ review và ý kiến chủ xe' }),
+      h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), researchBody])])
+    ]));
   }
 
   /* ---------- mode: theo mẫu xe ---------- */
@@ -601,4 +778,5 @@
   window.addEventListener('hashchange', applyHash);
 
   applyHash();
+  loadLivePrices();
 })();

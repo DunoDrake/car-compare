@@ -5,6 +5,55 @@
   color: '#eb0a1e',
   models: [
     {
+      id: 'raize',
+      name: 'Raize',
+      type: 'SUV hạng A',
+      common: {
+        specs: {
+          'Động cơ': '1.0L Turbo, 3 xi-lanh',
+          'Công suất': '98 hp',
+          'Mô-men xoắn': '140 Nm',
+          'Hộp số': 'Vô cấp D-CVT',
+          'Dẫn động': 'FWD (cầu trước)',
+          'Nhiên liệu': 'Xăng',
+          'Số chỗ ngồi': '5',
+          'Kích thước D x R x C': '4.030 x 1.710 x 1.605 mm',
+          'Chiều dài cơ sở': '2.525 mm',
+          'Khoảng sáng gầm': '200 mm',
+          'Dung tích bình xăng': '36 L',
+          'Dung tích khoang hành lý': '369 L',
+          'Phanh': 'Đĩa trước / tang trống sau'
+        },
+        interior: {
+          'Chất liệu ghế': 'Nỉ',
+          'Ghế lái': 'Chỉnh tay',
+          'Màn hình giải trí': '9 inch',
+          'Màn hình táp-lô': 'LCD kỹ thuật số 7 inch',
+          'Điều hòa': 'Tự động',
+          'Vô lăng': 'Bọc da, chỉnh 4 hướng',
+          'Hệ thống loa': '6 loa',
+          'Cửa gió hàng ghế sau': false,
+          'Cửa sổ trời': false
+        },
+        features: {
+          'Túi khí': '6 túi khí',
+          'Cân bằng điện tử VSC': true,
+          'Hỗ trợ khởi hành ngang dốc HAC': true,
+          'Camera lùi': true,
+          'Cảm biến đỗ xe': 'Sau',
+          'Cảnh báo điểm mù': true,
+          'Cảnh báo phương tiện cắt ngang khi lùi': true,
+          'Cruise control': false,
+          'Đèn pha': 'LED',
+          'Chìa khóa thông minh & Start/Stop': true,
+          'Kết nối Apple CarPlay / Android Auto': true
+        }
+      },
+      variants: [
+        { name: '1.0 Turbo', price: 510, specs: { 'Mâm / lốp': '17 inch, 205/60R17' } }
+      ]
+    },
+    {
       id: 'vios',
       name: 'Vios',
       type: 'Sedan hạng B',
