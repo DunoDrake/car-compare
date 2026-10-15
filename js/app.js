@@ -1,5 +1,6 @@
 (function () {
   var BRANDS = window.CAR_BRANDS || [];
+  BRANDS.forEach(function (b) { b.models.forEach(function (m) { m._key = b.id + '/' + m.id; }); });
   var GROUPS = [
     { key: 'specs', title: 'Thông số kỹ thuật' },
     { key: 'interior', title: 'Nội thất' },
@@ -105,12 +106,17 @@
     return brand ? brand.models.filter(function (m) { return m.id === id; })[0] : undefined;
   }
 
+  // Thứ tự ưu tiên: fill (bổ sung) < common < force (kích thước chuẩn) < variant.
   function mergedGroup(model, variant, key) {
     var out = {};
+    var extra = (window.CAR_SPECS_EXTRA || {})[model._key] || {};
+    var fill = (extra.fill && extra.fill[key]) || {};
+    var force = (extra.force && extra.force[key]) || {};
     var base = (model.common && model.common[key]) || {};
     var over = variant[key] || {};
-    Object.keys(base).forEach(function (k) { out[k] = base[k]; });
-    Object.keys(over).forEach(function (k) { out[k] = over[k]; });
+    [fill, base, force, over].forEach(function (layer) {
+      Object.keys(layer).forEach(function (k) { out[k] = layer[k]; });
+    });
     return out;
   }
 
@@ -573,7 +579,9 @@
         rows += 1;
       });
       var body = rows === 0
-        ? h('div', { 'class': 'empty', text: 'Không có điểm khác biệt giữa các xe đã chọn.' })
+        ? h('div', { 'class': 'empty', text: labels.length === 0
+            ? 'Chưa có dữ liệu cho mục này.'
+            : 'Không có điểm khác biệt giữa các xe đã chọn.' })
         : h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), tbody])]);
       container.appendChild(h('div', { 'class': 'group' }, [h('h3', { text: g.title }), body]));
     });
