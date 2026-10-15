@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>So sánh xe ô tô theo phiên bản</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="#" id="logo">Car<span>Compare</span></a>
+      <p class="tagline">So sánh thông số, nội thất và trang bị giữa các phiên bản, các hãng và theo tầm giá</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav class="mode-tabs" id="modeTabs" aria-label="Chế độ so sánh"></nav>
+    <nav class="brand-tabs" id="brandTabs" aria-label="Chọn hãng xe"></nav>
+
+    <section id="modelView">
+      <h2 class="section-title" id="modelViewTitle"></h2>
+      <div class="model-grid" id="modelGrid"></div>
+    </section>
+
+    <section id="compareView" hidden>
+      <button class="back-btn" id="backBtn" type="button">← Quay lại danh sách mẫu xe</button>
+      <div class="compare-head">
+        <div>
+          <p class="eyebrow" id="cmpBrand"></p>
+          <h2 class="compare-title" id="cmpTitle"></h2>
+          <p class="muted" id="cmpMeta"></p>
+        </div>
+      </div>
+      <div class="variant-picker" id="variantPicker" aria-label="Chọn phiên bản để so sánh"></div>
+      <div id="compareTables"></div>
+    </section>
+
+    <section id="crossView" hidden>
+      <h2 class="section-title">So sánh xe giữa các hãng</h2>
+      <p class="muted">Chọn hãng, mẫu và phiên bản cho từng xe (tối đa 4 xe) để đặt cạnh nhau.</p>
+      <div class="slots" id="slots"></div>
+      <div id="crossTables"></div>
+    </section>
+
+    <section id="priceView" hidden>
+      <h2 class="section-title">So sánh trong tầm giá</h2>
+      <div class="range-tabs" id="rangeTabs" aria-label="Chọn tầm giá"></div>
+      <div class="price-toolbar">
+        <label class="field">
+          <span>Hãng</span>
+          <select id="priceBrand"></select>
+        </label>
+        <p class="muted" id="priceHint"></p>
+      </div>
+      <div id="priceTables"></div>
+      <div class="price-list" id="priceList"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Dữ liệu mang tính tham khảo (giá niêm yết ước tính theo tháng 10/2026, đơn vị triệu đồng). Thông số thực tế có thể thay đổi theo năm sản xuất và chính sách của hãng; vui lòng xác nhận lại với đại lý trước khi mua.</p>
+    </div>
+  </footer>
+
+  <script src="data/kia.js"></script>
+  <script src="data/hyundai.js"></script>
+  <script src="data/mitsubishi.js"></script>
+  <script src="data/honda.js"></script>
+  <script src="data/mazda.js"></script>
+  <script src="data/audi.js"></script>
+  <script src="data/mercedes.js"></script>
+  <script src="data/bmw.js"></script>
+  <script src="data/volkswagen.js"></script>
+  <script src="data/ford.js"></script>
+  <script src="data/toyota.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
