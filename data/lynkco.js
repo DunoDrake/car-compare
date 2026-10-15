@@ -59,6 +59,34 @@
       variants: [
         { name: '09', price: 2199 }
       ]
+    },
+    {
+      id: '06',
+      name: '06',
+      type: 'SUV hạng B',
+      common: { specs: { 'Nhiên liệu': 'Xăng', 'Số chỗ ngồi': '5' }, interior: {}, features: {} },
+      variants: [
+        { name: 'Hyper Pro', price: 689 }
+      ]
+    },
+    {
+      id: '02',
+      name: '02',
+      type: 'SUV coupe hạng B',
+      common: { specs: { 'Số chỗ ngồi': '5' }, interior: {}, features: {} },
+      variants: [
+        { name: 'Pro', price: 818 },
+        { name: 'Halo', price: 898 }
+      ]
+    },
+    {
+      id: '900',
+      name: '900',
+      type: 'SUV cỡ lớn',
+      common: { specs: { 'Số chỗ ngồi': '7' }, interior: {}, features: {} },
+      variants: [
+        { name: '900', price: 3069 }
+      ]
     }
   ]
 });

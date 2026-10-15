@@ -56,7 +56,7 @@
           features: { 'Camera lùi': true, 'Cruise control': 'Cruise control thường', 'Sạc không dây': false }
         },
         {
-          name: 'C 200 Avantgarde Plus', price: 1769,
+          name: 'C 200 Avantgarde Plus', price: 1829,
           specs: { 'Mâm / lốp': '18 inch, 225/45R18' },
           interior: { 'Hệ thống loa': 'Burmester 3D 15 loa', 'Cửa sổ trời': 'Toàn cảnh' }
         },

@@ -183,7 +183,7 @@
           features: { 'Màn hình HUD': true }
         },
         {
-          name: 'President', price: 2488,
+          name: 'President', price: 2399,
           specs: { 'Mâm / lốp': '20 inch, 255/50R20' },
           interior: { 'Hệ thống loa': '12 loa Harman Kardon', 'Chất liệu ghế': 'Da Nappa' },
           features: { 'Màn hình HUD': true }

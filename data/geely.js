@@ -62,8 +62,33 @@
         features: {}
       },
       variants: [
-        { name: 'Max', price: 839 },
-        { name: 'Pro', price: 889 }
+        { name: 'Max', price: 889 },
+        { name: 'Pro', price: 839 }
+      ]
+    }  ,
+    {
+      id: 'ex2',
+      name: 'EX2',
+      type: 'SUV điện cỡ nhỏ',
+      common: { specs: { 'Nhiên liệu': 'Điện', 'Hộp số': '1 cấp (xe điện)', 'Số chỗ ngồi': '5' }, interior: {}, features: {} },
+      variants: [
+        { name: 'Pro', price: 459 },
+        { name: 'Max', price: 499 }
+      ]
+    },
+    {
+      id: 'monjaro',
+      name: 'Monjaro',
+      type: 'SUV hạng D',
+      common: {
+        specs: { 'Công suất': '238 hp', 'Mô-men xoắn': '350 Nm', 'Dẫn động': '4WD (4 bánh toàn thời gian)', 'Nhiên liệu': 'Xăng', 'Số chỗ ngồi': '5' },
+        interior: {},
+        features: {}
+      },
+      variants: [
+        { name: 'HEV', price: 1099, specs: { 'Nhiên liệu': 'Xăng (hybrid)' } },
+        { name: 'Premium', price: 1149 },
+        { name: 'Flagship', price: 1199 }
       ]
     }
   ]

@@ -149,7 +149,8 @@
           specs: { 'Mâm / lốp': '19 inch, 225/55R19' },
           interior: { 'Chất liệu ghế': 'Da Nappa', 'Hệ thống loa': '10 loa Bose', 'Cửa sổ trời': true, 'Ghế hành khách trước': 'Chỉnh điện, làm mát, sưởi', 'Vô lăng': 'Bọc da, sưởi', 'Kết nối Apple CarPlay / Android Auto không dây': true },
           features: { 'Cốp điện': 'Rảnh tay', 'i-Activsense': true, 'Camera lùi': '360 độ', 'Cảnh báo điểm mù BSM': true, 'Cruise control': 'Thích ứng MRCC Stop & Go', 'Màn hình HUD': true }
-        }
+        },
+        { name: '2.0 Deluxe (Tùy chọn)', price: 749, specs: { 'Mâm / lốp': '17 inch, 225/65R17' }, features: { 'Cốp điện': 'Có (chỉnh điện, chưa có đá cốp rảnh tay)', 'Cảm biến đỗ xe': 'Trước & sau', 'Cruise control': 'Cruise control thường' } }
       ]
     },
     {

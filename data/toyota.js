@@ -220,18 +220,18 @@
       },
       variants: [
         {
-          name: '2.0G', price: 730,
+          name: '2.0G', price: 730, onroad: { insurance: 953400 },
           specs: { 'Số chỗ ngồi': '8', 'Mâm / lốp': '17 inch, 215/60R17' },
           interior: { 'Ghế lái': 'Chỉnh tay 6 hướng', 'Chất liệu ghế': 'Nỉ' }
         },
         {
-          name: '2.0V', price: 825,
+          name: '2.0V', price: 825, onroad: { insurance: 953400 },
           specs: { 'Mâm / lốp': '18 inch, 225/50R18' },
           interior: { 'Cửa sổ trời': 'Toàn cảnh' },
           features: { 'Toyota Safety Sense': true, 'Camera lùi': '360 độ', 'Cruise control': 'Thích ứng thông minh', 'Cốp điện': true }
         },
         {
-          name: '2.0 HEV', price: 960,
+          name: '2.0 HEV', price: 960, onroad: { insurance: 953400 },
           specs: { 'Động cơ': '2.0L Hybrid (xăng + mô-tơ điện)', 'Công suất': '183 hp (tổng hợp)', 'Hộp số': 'e-CVT', 'Mâm / lốp': '18 inch, 225/50R18' },
           interior: { 'Cửa sổ trời': 'Toàn cảnh', 'Hệ thống loa': '9 loa JBL' },
           features: { 'Toyota Safety Sense': true, 'Camera lùi': '360 độ', 'Cruise control': 'Thích ứng thông minh', 'Cốp điện': true, 'Sạc không dây': true }

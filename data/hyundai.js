@@ -134,7 +134,8 @@
           specs: { 'Mâm / lốp': '17 inch, 215/55R17' },
           interior: { 'Ghế lái': 'Chỉnh điện 8 hướng', 'Hệ thống loa': '8 loa Bose', 'Cửa sổ trời': true, 'Điều hòa': 'Tự động 2 vùng' },
           features: { 'Camera lùi': '360 độ', 'Cảm biến đỗ xe': 'Trước & sau', 'Sạc không dây': true, 'Cảnh báo điểm mù BCW': true }
-        }
+        },
+        { name: 'N Line', price: 715, specs: { 'Mâm / lốp': '18 inch, thiết kế N Line' }, interior: { 'Chất liệu ghế': 'Da, chỉ khâu N Line', 'Hệ thống loa': '8 loa Bose', 'Cửa sổ trời': true }, features: { 'Camera lùi': '360 độ', 'Cảm biến đỗ xe': 'Trước & sau' } }
       ]
     },
     {

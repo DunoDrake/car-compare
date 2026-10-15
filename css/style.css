@@ -235,3 +235,17 @@ th .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; ma
 .thumb-render { background: linear-gradient(180deg, #f6f7f9 0%, #e3e6ea 100%); }
 .thumb-render img { object-fit: contain; padding: 6% 4% 4%; }
 .hero .thumb-hero { max-width: 860px; }
+
+/* ---- giá lăn bánh ---- */
+.onroad-bar { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; }
+.onroad-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.formula { margin-top: 10px; }
+.formula summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.formula-body { margin-top: 8px; font-size: 14px; color: var(--text); }
+.formula-body ul { margin: 6px 0 8px; padding-left: 20px; }
+.model-card .road { margin-top: 2px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.pr-price { display: flex; flex-direction: column; align-items: flex-end; }
+.pr-road { font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+.total-row td { font-size: 17px; font-weight: 800; }
+.total-row small { display: block; font-size: 12px; font-weight: 600; }
+.onroad-group h3 { color: var(--accent); }

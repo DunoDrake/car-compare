@@ -27,8 +27,11 @@
     slots: [],
     rangeId: RANGES[0].id,
     priceBrand: '',
-    priceSel: []
+    priceSel: [],
+    region: 'TP HCM',
+    promo: 0
   };
+  var ONROAD = window.CAR_ONROAD || null;
 
   var el = {
     modeTabs: document.getElementById('modeTabs'),
@@ -53,7 +56,8 @@
     priceHint: document.getElementById('priceHint'),
     priceTables: document.getElementById('priceTables'),
     priceList: document.getElementById('priceList'),
-    logo: document.getElementById('logo')
+    logo: document.getElementById('logo'),
+    onroadBar: document.getElementById('onroadBar')
   };
 
   /* ---------- helpers ---------- */
@@ -148,6 +152,121 @@
     return out;
   }
 
+  /* ---------- giá lăn bánh ---------- */
+
+  function loadPrefs() {
+    try {
+      var r = localStorage.getItem('cc.region');
+      var p = localStorage.getItem('cc.promo');
+      if (r) state.region = r;
+      if (p) state.promo = parseInt(p, 10) || 0;
+    } catch (e) { /* localStorage có thể bị chặn */ }
+  }
+
+  function savePrefs() {
+    try {
+      localStorage.setItem('cc.region', state.region);
+      localStorage.setItem('cc.promo', String(state.promo));
+    } catch (e) { /* bỏ qua */ }
+  }
+
+  function regionInfo() {
+    if (!ONROAD) return null;
+    var list = ONROAD.regions;
+    var hit = list.filter(function (r) { return r[0] === state.region; })[0] || list[0];
+    return { name: hit[0], rate: hit[1], plateBig: !!hit[2] };
+  }
+
+  function formatVnd(n) {
+    return Math.round(n).toLocaleString('vi-VN') + ' đ';
+  }
+
+  function seatsOf(specs) {
+    var m = String((specs && specs['Số chỗ ngồi']) || '').match(/\d+/);
+    return m ? parseInt(m[0], 10) : 5;
+  }
+
+  // Công thức: xem data/onroad.js. entry = { brand, model, variant }.
+  function calcOnRoad(entry) {
+    var reg = regionInfo();
+    if (!ONROAD || !reg) return null;
+    var fees = ONROAD.fees;
+    var specs = mergedGroup(entry.model, entry.variant, 'specs');
+    var over = entry.variant.onroad || {};
+    var pickup = /bán tải/i.test(entry.model.type || '');
+    var ev = /^điện/i.test(String(specs['Nhiên liệu'] || ''));
+    var seats = seatsOf(specs);
+    var price = entry.variant.price * 1000000;
+    var rate = ev ? 0 : reg.rate;
+    var tax = price * rate / 100;
+    var plate = reg.plateBig ? fees.plateBigCity : fees.plateOther;
+    var inspection = fees.inspection;
+    var road = over.roadMaintenance || (pickup ? fees.roadMaintenancePickup : fees.roadMaintenance);
+    var insurance = over.insurance || (pickup ? fees.insurance.pickup : (seats > 5 ? fees.insurance.seats7 : fees.insurance.seats5));
+    var support = tax * (state.promo / 100);
+    var total = price + tax + plate + inspection + road + insurance - support;
+    return {
+      price: price, rate: rate, ev: ev, tax: tax, plate: plate, inspection: inspection,
+      road: road, insurance: insurance, support: support, total: total, region: reg.name
+    };
+  }
+
+  function formatMillion(vnd) {
+    var m = vnd / 1000000;
+    return m >= 1000
+      ? (m / 1000).toFixed(3).replace(/0+$/, '').replace(/\.$/, '').replace('.', ',') + ' tỷ'
+      : Math.round(m).toLocaleString('vi-VN') + ' triệu';
+  }
+
+  function refreshView() {
+    if (state.mode === 'cross') updateCross();
+    else if (state.mode === 'price') renderPrice();
+    else if (state.modelId) renderModelCompare();
+    else renderModelGrid();
+  }
+
+  function renderOnroadBar() {
+    if (!ONROAD) { el.onroadBar.hidden = true; return; }
+    el.onroadBar.textContent = '';
+    var regionSel = h('select', { 'aria-label': 'Nơi đăng ký biển số' });
+    ONROAD.regions.forEach(function (r) {
+      var o = h('option', { value: r[0], text: r[0] + ' (trước bạ ' + r[1] + '%)' });
+      if (r[0] === state.region) o.selected = true;
+      regionSel.appendChild(o);
+    });
+    regionSel.addEventListener('change', function () {
+      state.region = regionSel.value; savePrefs(); refreshView();
+    });
+    var promoSel = h('select', { 'aria-label': 'Hỗ trợ trước bạ' });
+    [[0, 'Không'], [50, 'Hỗ trợ 50%'], [100, 'Hỗ trợ 100%']].forEach(function (p) {
+      var o = h('option', { value: String(p[0]), text: p[1] });
+      if (p[0] === state.promo) o.selected = true;
+      promoSel.appendChild(o);
+    });
+    promoSel.addEventListener('change', function () {
+      state.promo = parseInt(promoSel.value, 10) || 0; savePrefs(); refreshView();
+    });
+    var f = ONROAD.fees;
+    var formula = h('details', { 'class': 'formula' }, [
+      h('summary', { text: 'Công thức tính giá lăn bánh' }),
+      h('div', { 'class': 'formula-body' }, [
+        h('p', { text: 'Giá lăn bánh = giá niêm yết + thuế trước bạ + lệ phí biển số + phí kiểm định + phí bảo trì đường bộ (1 năm) + bảo hiểm TNDS bắt buộc (1 năm) - hỗ trợ trước bạ (nếu có).' }),
+        h('ul', null, [
+          h('li', { text: 'Thuế trước bạ = giá niêm yết × tỷ lệ theo nơi đăng ký (Hà Nội, Hải Phòng, Quảng Ninh, Cao Bằng, Lạng Sơn, Lào Cai, Sơn La: 12%; Hà Tĩnh: 11%; còn lại: 10%). Xe điện: 0%.' }),
+          h('li', { text: 'Lệ phí biển số: ' + formatVnd(f.plateBigCity) + ' (Hà Nội, TP.HCM), ' + formatVnd(f.plateOther) + ' (nơi khác).' }),
+          h('li', { text: 'Phí kiểm định: ' + formatVnd(f.inspection) + '. Bảo trì đường bộ: ' + formatVnd(f.roadMaintenance) + '/năm (bán tải: ' + formatVnd(f.roadMaintenancePickup) + ').' }),
+          h('li', { text: 'TNDS bắt buộc: ' + formatVnd(f.insurance.seats5) + ' (đến 5 chỗ), ' + formatVnd(f.insurance.seats7) + ' (6 chỗ trở lên), ' + formatVnd(f.insurance.pickup) + ' (bán tải).' })
+        ]),
+        h('p', { 'class': 'muted', text: 'Ước tính theo bảng tính của ' + ONROAD.source + ' (' + ONROAD.updated + '). Chưa gồm bảo hiểm vật chất, phụ kiện, phí dịch vụ đại lý hay khuyến mãi tiền mặt.' })
+      ])
+    ]);
+    el.onroadBar.appendChild(h('div', { 'class': 'onroad-fields' }, [
+      h('label', { 'class': 'field' }, [h('span', { text: 'Đăng ký biển số tại' }), regionSel]),
+      h('label', { 'class': 'field' }, [h('span', { text: 'Hỗ trợ trước bạ' }), promoSel])
+    ]));
+    el.onroadBar.appendChild(formula);
+  }
+
   function imageFor(brandId, modelId) {
     var all = window.CAR_IMAGES || {};
     return all[brandId + '/' + modelId] || null;
@@ -186,6 +305,7 @@
       name: entry.variant.name,
       price: entry.variant.price,
       image: imageFor(entry.brand.id, entry.model.id),
+      onroad: calcOnRoad(entry),
       review: reviewFor(entry),
       data: {
         specs: mergedGroup(entry.model, entry.variant, 'specs'),
@@ -345,6 +465,39 @@
       h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), h('tbody', null, [priceRow])])])
     ]));
 
+    if (columns.every(function (c) { return c.onroad; })) {
+      var reg = columns[0].onroad.region;
+      var rows = [
+        ['Giá niêm yết', function (o) { return formatVnd(o.price); }],
+        ['Thuế trước bạ', function (o) { return formatVnd(o.tax) + ' (' + o.rate + '%' + (o.ev ? ', xe điện' : '') + ')'; }],
+        ['Lệ phí biển số', function (o) { return formatVnd(o.plate); }],
+        ['Phí kiểm định', function (o) { return formatVnd(o.inspection); }],
+        ['Phí bảo trì đường bộ (1 năm)', function (o) { return formatVnd(o.road); }],
+        ['Bảo hiểm TNDS bắt buộc (1 năm)', function (o) { return formatVnd(o.insurance); }]
+      ];
+      if (state.promo > 0) {
+        rows.push(['Hỗ trợ trước bạ ' + state.promo + '%', function (o) { return '- ' + formatVnd(o.support); }]);
+      }
+      var body = h('tbody');
+      rows.forEach(function (r) {
+        var tr = h('tr', null, [h('th', { text: r[0] })]);
+        columns.forEach(function (c) { tr.appendChild(h('td', { text: r[1](c.onroad) })); });
+        body.appendChild(tr);
+      });
+      var totalRow = h('tr', { 'class': 'price-row total-row' }, [h('th', { text: 'Giá lăn bánh (ước tính)' })]);
+      columns.forEach(function (c) {
+        totalRow.appendChild(h('td', null, [
+          h('div', { text: formatVnd(c.onroad.total) }),
+          h('small', { 'class': 'muted', text: '≈ ' + formatMillion(c.onroad.total) })
+        ]));
+      });
+      body.appendChild(totalRow);
+      container.appendChild(h('div', { 'class': 'group onroad-group' }, [
+        h('h3', { text: 'Giá lăn bánh tại ' + reg }),
+        h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), body])])
+      ]));
+    }
+
     GROUPS.forEach(function (g) {
       var datasets = columns.map(function (c) { return c.data[g.key]; });
       var labels = unionLabels(datasets);
@@ -469,6 +622,11 @@
       var lo = Math.min.apply(null, prices);
       var hi = Math.max.apply(null, prices);
       var priceText = lo === hi ? formatPrice(lo) : formatPrice(lo) + ' – ' + formatPrice(hi);
+      var roadTotals = m.variants.map(function (v) {
+        var o = calcOnRoad({ brand: brand, model: m, variant: v });
+        return o ? o.total : null;
+      }).filter(function (x) { return x !== null; });
+      var roadText = roadTotals.length ? 'Lăn bánh từ ' + formatMillion(Math.min.apply(null, roadTotals)) : '';
       var img = imageFor(brand.id, m.id);
       var card = h('button', {
         'class': 'model-card',
@@ -479,6 +637,7 @@
         h('h3', { text: m.name }),
         h('div', { 'class': 'type', text: m.type }),
         h('div', { 'class': 'price', text: priceText }),
+        roadText ? h('div', { 'class': 'road', text: roadText }) : null,
         h('div', { 'class': 'count', text: m.variants.length + ' phiên bản' }),
         h('div', { 'class': 'cta', text: 'So sánh các phiên bản →' }),
         img ? h('div', { 'class': 'credit', text: creditText(img) }) : null
@@ -708,7 +867,13 @@
           h('strong', { text: e.brand.name + ' ' + e.model.name + ' ' + e.variant.name }),
           chips
         ]),
-        h('span', { 'class': 'pr-price', text: formatPrice(e.variant.price) })
+        h('span', { 'class': 'pr-price' }, [
+          h('span', { text: formatPrice(e.variant.price) }),
+          (function () {
+            var o = calcOnRoad(e);
+            return o ? h('small', { 'class': 'pr-road', text: 'Lăn bánh ~' + formatMillion(o.total) }) : null;
+          })()
+        ])
       ]);
       el.priceList.appendChild(row);
     });
@@ -827,6 +992,8 @@
   el.logo.addEventListener('click', function (e) { e.preventDefault(); go('#'); });
   window.addEventListener('hashchange', applyHash);
 
+  loadPrefs();
+  renderOnroadBar();
   applyHash();
   loadLivePrices();
 })();

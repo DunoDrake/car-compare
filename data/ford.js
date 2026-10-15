@@ -72,11 +72,12 @@
           features: { 'Camera lùi': '360 độ', 'Cảm biến đỗ xe': 'Trước & sau', 'Cruise control': 'Thích ứng thông minh', 'Sạc không dây': true, 'Chế độ lái': 'Normal / Eco / Tow-Haul / Slippery / Sand / Mud-Rut' }
         },
         {
-          name: 'Raptor 3.0 V6 EcoBoost', price: 1299,
+          name: 'Raptor 3.0 V6 EcoBoost', price: 1448, onroad: { insurance: 530700 },
           specs: { 'Động cơ': '3.0L EcoBoost V6 tăng áp kép', 'Công suất': '392 hp @ 5.650 rpm', 'Mô-men xoắn': '583 Nm @ 3.500 rpm', 'Hộp số': 'Tự động 10 cấp', 'Nhiên liệu': 'Xăng', 'Dẫn động': '4x4 (2 cầu, gài cầu điện tử)', 'Mâm / lốp': '17 inch, 285/70R17 (địa hình)', 'Kích thước D x R x C': '5.381 x 2.028 x 1.922 mm', 'Khoảng sáng gầm': '272 mm' },
           interior: { 'Chất liệu ghế': 'Da, ghế thể thao Recaro', 'Ghế lái': 'Chỉnh điện 8 hướng', 'Hệ thống loa': '10 loa B&O', 'Màn hình táp-lô': 'LCD 12.4 inch', 'Màn hình giải trí': 'SYNC 4A 12 inch' },
           features: { 'Camera lùi': '360 độ', 'Cảm biến đỗ xe': 'Trước & sau', 'Cruise control': 'Thích ứng thông minh', 'Sạc không dây': true, 'Chế độ lái': 'Normal / Sport / Baja / Rock Crawl / Mud-Sand / Slippery', 'Hệ thống treo': 'Fox Racing bypass' }
-        }
+        },
+        { name: 'Raptor 2.0 Bi-Turbo 4WD AT', price: 1299, onroad: { insurance: 530700 }, specs: { 'Động cơ': '2.0L Bi-Turbo diesel, 4 xi-lanh', 'Công suất': '210 hp @ 3.750 rpm', 'Mô-men xoắn': '500 Nm @ 1.750-2.000 rpm', 'Hộp số': 'Tự động 10 cấp', 'Dẫn động': '4WD', 'Nhiên liệu': 'Dầu diesel' } }
       ]
     },
     {
@@ -217,7 +218,8 @@
           specs: { 'Mâm / lốp': '19 inch, 235/50R19' },
           interior: { 'Ghế lái': 'Chỉnh điện 8 hướng', 'Hệ thống loa': '8 loa', 'Cửa sổ trời': 'Toàn cảnh' },
           features: { 'Camera lùi': '360 độ', 'Cảm biến đỗ xe': 'Trước & sau', 'Cruise control': 'Thích ứng thông minh', 'Cốp điện': true, 'Sạc không dây': true }
-        }
+        },
+        { name: 'Platinum', price: 916, specs: { 'Mâm / lốp': '19 inch, 235/50R19' }, interior: { 'Ghế lái': 'Chỉnh điện 8 hướng', 'Hệ thống loa': '8 loa', 'Cửa sổ trời': 'Toàn cảnh' }, features: { 'Camera lùi': '360 độ', 'Cảm biến đỗ xe': 'Trước & sau', 'Cruise control': 'Thích ứng thông minh', 'Cốp điện': true, 'Sạc không dây': true } }
       ]
     }
   ]

@@ -3,7 +3,7 @@ Audi,Q3,SUV TFSI Advanced,2099
 Audi,Q3,Sportback TFSI S line,2199
 Audi,Q5,45 TFSI quattro S line,2849
 Audi,Q5,Sportback 45 TFSI quattro S line,2949
-Audi,A6,45 TFSI,2690
+Audi,A6,45 TFSI,2799
 BMW,3 Series,320i Sport Line,1379
 BMW,3 Series,320i M Sport,1512
 BMW,3 Series,330i M Sport,1789
@@ -15,7 +15,8 @@ Ford,Ranger,XLS 2.0 4x2 AT,726
 Ford,Ranger,XLS 2.0 4x4 AT,795
 Ford,Ranger,Wildtrak 2.0 Bi-Turbo 4x4 AT,973
 Ford,Ranger,Wildtrak 3.0 V6 4x4 AT,1093
-Ford,Ranger,Raptor 3.0 V6 EcoBoost,1299
+Ford,Ranger,Raptor 3.0 V6 EcoBoost,1448
+Ford,Ranger,Raptor 2.0 Bi-Turbo 4WD AT,1299
 Ford,Everest,Active 2.0 4x2 AT,1129
 Ford,Everest,Sport 2.0 4x2 AT,1209
 Ford,Everest,Platinum 2.0 4x2 AT,1335
@@ -24,13 +25,19 @@ Ford,Everest,Platinum+ 2.3 EcoBoost 4x4 AT,1629
 Ford,Territory,Trend,739
 Ford,Territory,Titanium,819
 Ford,Territory,Titanium X,875
+Ford,Territory,Platinum,916
 Geely,Coolray,Executive,499
 Geely,Coolray,Premium,549
 Geely,Coolray,Flagship,599
 Geely,Okavango,Executive,739
 Geely,Okavango,Premium,799
-Geely,EX5,Max,839
-Geely,EX5,Pro,889
+Geely,EX5,Max,889
+Geely,EX5,Pro,839
+Geely,EX2,Pro,459
+Geely,EX2,Max,499
+Geely,Monjaro,HEV,1099
+Geely,Monjaro,Premium,1149
+Geely,Monjaro,Flagship,1199
 Honda,City,L,539
 Honda,City,RS,569
 Honda,HR-V,G,669
@@ -48,6 +55,7 @@ Hyundai,Accent,1.5 AT Cao cấp,569
 Hyundai,Creta,1.5 Tiêu chuẩn,599
 Hyundai,Creta,1.5 Đặc biệt,659
 Hyundai,Creta,1.5 Cao cấp,705
+Hyundai,Creta,N Line,715
 Hyundai,Stargazer,1.5 Tiêu chuẩn,489
 Hyundai,Stargazer,1.5 Đặc biệt,569
 Hyundai,Stargazer,1.5 Cao cấp,615
@@ -57,6 +65,7 @@ Jaecoo,J5,SHS-H Flagship (hybrid),749
 Jaecoo,J5,EV Flagship,749
 Jaecoo,J7,Flagship (FWD),799
 Jaecoo,J7,AWD,849
+Jaecoo,J7,PHEV,969
 Kia,Sonet,1.5L AT,450
 Kia,Sonet,1.5L Deluxe,489
 Kia,Sonet,1.5L Luxury,529
@@ -82,6 +91,10 @@ Lynk & Co,01,Hyper Pro,999
 Lynk & Co,08,EM-P Pro,1299
 Lynk & Co,08,EM-P Halo,1389
 Lynk & Co,09,09,2199
+Lynk & Co,06,Hyper Pro,689
+Lynk & Co,02,Pro,818
+Lynk & Co,02,Halo,898
+Lynk & Co,900,900,3069
 Mazda,Mazda3,1.5 Deluxe,569
 Mazda,Mazda3,1.5 Luxury,644
 Mazda,Mazda3,1.5 Premium,719
@@ -90,6 +103,7 @@ Mazda,CX-5,2.0 Luxury,789
 Mazda,CX-5,2.0 Premium,829
 Mazda,CX-5,2.0 Premium Sport,849
 Mazda,CX-5,2.0 Premium Exclusive,869
+Mazda,CX-5,2.0 Deluxe (Tùy chọn),749
 Mazda,CX-30,2.0 Luxury,699
 Mazda,CX-30,2.0 Premium,749
 Mazda,CX-8,2.5 Luxury,899
@@ -97,7 +111,7 @@ Mazda,CX-8,2.5 Luxury (Tùy chọn),949
 Mazda,CX-8,2.5 Premium,1019
 Mazda,CX-8,2.5 Signature AWD,1149
 Mercedes-Benz,C-Class,C 200 Avantgarde,1599
-Mercedes-Benz,C-Class,C 200 Avantgarde Plus,1769
+Mercedes-Benz,C-Class,C 200 Avantgarde Plus,1829
 Mercedes-Benz,C-Class,C 300 AMG,2099
 Mercedes-Benz,GLC,GLC 200 4MATIC,2299
 Mercedes-Benz,GLC,GLC 300 4MATIC,2839
@@ -115,6 +129,8 @@ Mitsubishi,Destinator,Premium,780
 Mitsubishi,Destinator,Ultimate,855
 Suzuki,XL7,Hybrid Black Edition,599
 Suzuki,Fronx,GLX Plus,649
+Suzuki,Fronx,GL,520
+Suzuki,Fronx,GLX,599
 Toyota,Raize,1.0 Turbo,510
 Toyota,Vios,1.5E MT,458
 Toyota,Vios,1.5E CVT,488
@@ -134,4 +150,4 @@ Volkswagen,Tiguan,Platinum,1688
 Volkswagen,Teramont,X Base,1998
 Volkswagen,Teramont,X Limited,2138
 Volkswagen,Teramont,X Platinum,2168
-Volkswagen,Teramont,President,2488
+Volkswagen,Teramont,President,2399

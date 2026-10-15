@@ -168,7 +168,7 @@
       },
       variants: [
         {
-          name: '45 TFSI', price: 2690,
+          name: '45 TFSI', price: 2799,
           specs: { 'Mâm / lốp': '18 inch, 245/45R18' }
         }
       ]

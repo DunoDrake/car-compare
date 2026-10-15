@@ -31,7 +31,8 @@
       },
       variants: [
         { name: 'Flagship (FWD)', price: 799, specs: { 'Dẫn động': 'FWD (cầu trước)' } },
-        { name: 'AWD', price: 849, specs: { 'Dẫn động': 'AWD (4 bánh)' } }
+        { name: 'AWD', price: 849, specs: { 'Dẫn động': 'AWD (4 bánh)' } },
+        { name: 'PHEV', price: 969, specs: { 'Động cơ': '1.5L Turbo + mô-tơ điện (plug-in hybrid)', 'Nhiên liệu': 'Xăng + điện (plug-in hybrid)', 'Dẫn động': 'FWD (cầu trước)' } }
       ]
     }
   ]

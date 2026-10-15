@@ -96,7 +96,9 @@
         }
       },
       variants: [
-        { name: 'GLX Plus', price: 649 }
+        { name: 'GLX Plus', price: 649 },
+        { name: 'GL', price: 520, features: { 'Cruise control': 'Đang cập nhật', 'Hỗ trợ giữ làn': 'Đang cập nhật', 'Phanh tự động khẩn cấp': 'Đang cập nhật', 'Sạc không dây': 'Đang cập nhật', 'Kết nối Apple CarPlay / Android Auto': 'Đang cập nhật' }, interior: { 'Màn hình HUD': 'Đang cập nhật', 'Chất liệu ghế': 'Đang cập nhật' } },
+        { name: 'GLX', price: 599, features: { 'Cruise control': 'Đang cập nhật', 'Hỗ trợ giữ làn': 'Đang cập nhật', 'Phanh tự động khẩn cấp': 'Đang cập nhật', 'Sạc không dây': 'Đang cập nhật', 'Kết nối Apple CarPlay / Android Auto': 'Đang cập nhật' }, interior: { 'Màn hình HUD': 'Đang cập nhật' } }
       ]
     }
   ]
