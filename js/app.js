@@ -35,6 +35,9 @@
     priceBasis: 'list',
     priceBrand: '',
     priceSel: [],
+    fBody: {},
+    fTier: {},
+    fSeats: {},
     region: 'TP HCM',
     promo: 0
   };
@@ -63,6 +66,7 @@
     priceHint: document.getElementById('priceHint'),
     priceTables: document.getElementById('priceTables'),
     priceSlider: document.getElementById('priceSlider'),
+    priceFilters: document.getElementById('priceFilters'),
     priceList: document.getElementById('priceList'),
     logo: document.getElementById('logo'),
     onroadBar: document.getElementById('onroadBar')
@@ -275,6 +279,52 @@
     el.onroadBar.appendChild(formula);
   }
 
+  /* ---------- phân loại xe: kiểu xe, hạng, số chỗ ---------- */
+
+  // Tên mẫu chỉ là số (01, 06, 900) thì ghép tên hãng cho dễ hiểu.
+  function modelLabel(brand, model) {
+    return /^\d/.test(model.name) ? brand.name + ' ' + model.name : model.name;
+  }
+
+  function bodyOf(model) {
+    var t = String(model.type || '').toLowerCase();
+    if (/bán tải/.test(t)) return 'Bán tải';
+    if (/mpv/.test(t)) return 'MPV';
+    if (/sedan/.test(t)) return 'Sedan';
+    if (/hatchback|mini/.test(t)) return 'Hatchback / mini';
+    if (/suv|crossover|cuv/.test(t)) return 'SUV / Crossover';
+    return 'Khác';
+  }
+
+  function tierOf(model) {
+    var m = String(model.type || '').match(/hạng ([a-e])\b/i);
+    if (m) return 'Hạng ' + m[1].toUpperCase();
+    if (/cỡ lớn|cỡ trung/i.test(model.type || '')) return 'Cỡ lớn / trung';
+    return 'Khác';
+  }
+
+  var BODY_ORDER = ['Sedan', 'Hatchback / mini', 'SUV / Crossover', 'MPV', 'Bán tải'];
+  var TIER_ORDER = ['Hạng A', 'Hạng B', 'Hạng C', 'Hạng D', 'Hạng E', 'Cỡ lớn / trung'];
+  var SEAT_ORDER = ['4 chỗ trở xuống', '5 chỗ', '6 - 7 chỗ', '8 chỗ trở lên'];
+
+  function seatBucket(n) {
+    if (n <= 4) return '4 chỗ trở xuống';
+    if (n === 5) return '5 chỗ';
+    if (n <= 7) return '6 - 7 chỗ';
+    return '8 chỗ trở lên';
+  }
+
+  function matchesFilters(e) {
+    var any = function (o) { return Object.keys(o).some(function (k) { return o[k]; }); };
+    if (any(state.fBody) && !state.fBody[bodyOf(e.model)]) return false;
+    if (any(state.fTier) && !state.fTier[tierOf(e.model)]) return false;
+    if (any(state.fSeats)) {
+      var seats = seatsOf(mergedGroup(e.model, e.variant, 'specs'));
+      if (!state.fSeats[seatBucket(seats)]) return false;
+    }
+    return true;
+  }
+
   function imageFor(brandId, modelId) {
     var all = window.CAR_IMAGES || {};
     return all[brandId + '/' + modelId] || null;
@@ -438,15 +488,17 @@
     container.textContent = '';
     if (!columns.length) return;
 
-    var toolbar = h('div', { 'class': 'table-toolbar' });
-    var check = h('input', { type: 'checkbox' });
-    check.checked = state.diffOnly;
-    check.addEventListener('change', function () {
-      state.diffOnly = check.checked;
-      renderComparison(container, columns);
-    });
-    toolbar.appendChild(h('label', { 'class': 'switch' }, [check, h('span', { text: 'Chỉ hiện điểm khác biệt' })]));
-    container.appendChild(toolbar);
+    if (columns.length > 1) {
+      var toolbar = h('div', { 'class': 'table-toolbar' });
+      var check = h('input', { type: 'checkbox' });
+      check.checked = state.diffOnly;
+      check.addEventListener('change', function () {
+        state.diffOnly = check.checked;
+        renderComparison(container, columns);
+      });
+      toolbar.appendChild(h('label', { 'class': 'switch' }, [check, h('span', { text: 'Chỉ hiện điểm khác biệt' })]));
+      container.appendChild(toolbar);
+    }
 
     var makeHead = function () {
       var tr = h('tr', null, [h('th', { text: 'Hạng mục' })]);
@@ -514,7 +566,7 @@
       labels.forEach(function (label) {
         var keys = datasets.map(function (d) { return valueKey(d[label]); });
         var isDiff = columns.length > 1 && keys.some(function (k) { return k !== keys[0]; });
-        if (state.diffOnly && !isDiff) return;
+        if (state.diffOnly && columns.length > 1 && !isDiff) return;
         var tr = h('tr', { 'class': isDiff ? 'diff' : '' }, [h('th', { text: label })]);
         datasets.forEach(function (d) { tr.appendChild(renderValueCell(d[label])); });
         tbody.appendChild(tr);
@@ -602,15 +654,21 @@
   function renderBrandTabs() {
     el.brandTabs.textContent = '';
     BRANDS.forEach(function (b) {
+      var logo = h('img', {
+        src: 'images/logos/' + b.id + '.svg', alt: '', loading: 'lazy', decoding: 'async'
+      });
+      logo.addEventListener('error', function () { logo.hidden = true; });
       var btn = h('button', {
         'class': 'brand-tab',
         type: 'button',
         role: 'tab',
         'aria-selected': String(b.id === state.brandId),
+        'aria-label': b.name,
+        title: b.name,
         style: '--brand:' + b.color
       }, [
-        h('span', { 'class': 'dot' }),
-        h('span', { text: b.name })
+        h('span', { 'class': 'logo-tile' }, [logo]),
+        h('span', { 'class': 'brand-name', text: b.name })
       ]);
       btn.addEventListener('click', function () { go('#' + b.id); });
       el.brandTabs.appendChild(btn);
@@ -642,12 +700,12 @@
         style: '--brand:' + brand.color
       }, [
         thumbEl(brand, m, 'card'),
-        h('h3', { text: m.name }),
+        h('h3', { text: modelLabel(brand, m) }),
         h('div', { 'class': 'type', text: m.type }),
         h('div', { 'class': 'price', text: priceText }),
         roadText ? h('div', { 'class': 'road', text: roadText }) : null,
         h('div', { 'class': 'count', text: m.variants.length + ' phiên bản' }),
-        h('div', { 'class': 'cta', text: 'So sánh các phiên bản →' }),
+        h('div', { 'class': 'cta', text: m.variants.length > 1 ? 'So sánh các phiên bản →' : 'Xem thông tin xe →' }),
         img ? h('div', { 'class': 'credit', text: creditText(img) }) : null
       ]);
       card.addEventListener('click', function () { go('#' + brand.id + '/' + m.id); });
@@ -699,10 +757,14 @@
     if (!model) return;
     el.cmpBrand.textContent = brand.name;
     el.cmpBrand.style.setProperty('--brand', brand.color);
-    el.cmpTitle.textContent = model.name;
-    el.cmpMeta.textContent = model.type + ' · ' + model.variants.length + ' phiên bản';
+    el.cmpTitle.textContent = modelLabel(brand, model);
+    var single = model.variants.length === 1;
+    el.cmpMeta.textContent = single
+      ? model.type + ' · 1 phiên bản · ' + formatPrice(model.variants[0].price)
+      : model.type + ' · ' + model.variants.length + ' phiên bản';
     renderHero(brand, model);
-    renderVariantPicker(brand, model);
+    el.variantPicker.hidden = single;
+    if (!single) renderVariantPicker(brand, model);
     var columns = [];
     model.variants.forEach(function (v, i) {
       if (!state.selected[i]) return;
@@ -793,11 +855,14 @@
     renderSlots();
     var keys = state.slots.map(slotKey).filter(Boolean);
     var columns = keys.map(resolveKey).filter(Boolean).map(function (e) { return toColumn(e, true); });
-    if (columns.length < 2) {
+    if (columns.length === 0) {
       el.crossTables.textContent = '';
-      el.crossTables.appendChild(h('div', { 'class': 'empty', text: 'Chọn ít nhất 2 xe (hãng, mẫu, phiên bản) để xem bảng so sánh.' }));
+      el.crossTables.appendChild(h('div', { 'class': 'empty', text: 'Chọn xe (hãng, mẫu, phiên bản) để xem thông tin; chọn từ 2 xe trở lên để so sánh.' }));
     } else {
       renderComparison(el.crossTables, columns);
+      if (columns.length === 1) {
+        el.crossTables.insertBefore(h('div', { 'class': 'empty', text: 'Đang hiện thông tin 1 xe. Chọn thêm xe ở trên để so sánh.' }), el.crossTables.firstChild);
+      }
     }
     setHashQuiet(keys.length ? '#compare/' + keys.join(',') : '#compare');
   }
@@ -835,7 +900,7 @@
     RANGES.forEach(function (r) {
       var count = entries.filter(function (e) {
         var p = priceOf(e);
-        return p >= r.min && (r.max >= SLIDER_MAX || p <= r.max);
+        return p >= r.min && (r.max >= SLIDER_MAX || p <= r.max) && matchesFilters(e);
       }).length;
       var btn = h('button', {
         'class': 'range-tab',
@@ -878,6 +943,7 @@
       });
       paintSlider();
       renderRangeTabs();
+      renderPriceFilters();
       renderPriceResults();
     }
     minInput.addEventListener('input', function () { onMove('min'); });
@@ -920,10 +986,83 @@
     BRANDS.forEach(function (b) { el.priceBrand.appendChild(option(b.id, b.name, b.id === state.priceBrand)); });
   }
 
+  var FILTER_GROUPS = [
+    { title: 'Kiểu xe', order: BODY_ORDER, store: 'fBody', get: function (e) { return bodyOf(e.model); } },
+    { title: 'Hạng xe', order: TIER_ORDER, store: 'fTier', get: function (e) { return tierOf(e.model); } },
+    { title: 'Số chỗ', order: SEAT_ORDER, store: 'fSeats', get: function (e) { return seatBucket(seatsOf(mergedGroup(e.model, e.variant, 'specs'))); } }
+  ];
+
+  function anyOn(o) {
+    return Object.keys(o).some(function (k) { return o[k]; });
+  }
+
+  // Xe trong khoảng giá hiện tại và hãng đang chọn, chưa áp bộ lọc loại xe.
+  function priceBase() {
+    return allEntries()
+      .filter(function (e) { return inPriceRange(priceOf(e)); })
+      .filter(function (e) { return !state.priceBrand || e.brand.id === state.priceBrand; });
+  }
+
+  function passOthers(e, skipStore) {
+    return FILTER_GROUPS.every(function (g) {
+      if (g.store === skipStore) return true;
+      var sel = state[g.store];
+      return !anyOn(sel) || !!sel[g.get(e)];
+    });
+  }
+
+  function renderPriceFilters() {
+    var base = priceBase();
+    el.priceFilters.textContent = '';
+    FILTER_GROUPS.forEach(function (g) {
+      var counts = {};
+      base.forEach(function (e) {
+        if (!passOthers(e, g.store)) return;
+        var v = g.get(e);
+        counts[v] = (counts[v] || 0) + 1;
+      });
+      var wrap = h('div', { 'class': 'filter-group' }, [h('span', { 'class': 'filter-title', text: g.title })]);
+      var row = h('div', { 'class': 'filter-chips' });
+      g.order.forEach(function (name) {
+        var n = counts[name] || 0;
+        var on = !!state[g.store][name];
+        if (!n && !on) {
+          // bỏ chip của nhóm không có xe nào trong toàn bộ dữ liệu, mờ chip tạm thời không có kết quả
+          var everywhere = allEntries().some(function (e) { return g.get(e) === name; });
+          if (!everywhere) return;
+        }
+        var chip = h('button', {
+          'class': 'filter-chip', type: 'button', 'aria-pressed': String(on), text: name + ' (' + n + ')'
+        });
+        if (!n && !on) chip.disabled = true;
+        chip.addEventListener('click', function () {
+          state[g.store][name] = !state[g.store][name];
+          state.priceSel = [];
+          renderPriceFilters();
+          renderRangeTabs();
+          renderPriceResults();
+        });
+        row.appendChild(chip);
+      });
+      wrap.appendChild(row);
+      el.priceFilters.appendChild(wrap);
+    });
+    if (FILTER_GROUPS.some(function (g) { return anyOn(state[g.store]); })) {
+      var reset = h('button', { 'class': 'link-btn', type: 'button', text: 'Bỏ hết bộ lọc' });
+      reset.addEventListener('click', function () {
+        state.fBody = {}; state.fTier = {}; state.fSeats = {};
+        state.priceSel = [];
+        renderPriceFilters(); renderRangeTabs(); renderPriceResults();
+      });
+      el.priceFilters.appendChild(reset);
+    }
+  }
+
   function renderPrice() {
     buildPriceSlider();
     paintSlider();
     renderRangeTabs();
+    renderPriceFilters();
     renderPriceBrandFilter();
     renderPriceResults();
   }
@@ -932,6 +1071,7 @@
     var list = allEntries()
       .filter(function (e) { return inPriceRange(priceOf(e)); })
       .filter(function (e) { return !state.priceBrand || e.brand.id === state.priceBrand; })
+      .filter(matchesFilters)
       .sort(function (a, b) { return priceOf(a) - priceOf(b); });
 
     // drop selections that fell out of the current list
@@ -983,19 +1123,17 @@
     }
 
     el.priceTables.textContent = '';
-    if (state.priceSel.length >= 2) {
+    if (state.priceSel.length >= 1) {
       var columns = state.priceSel.map(resolveKey).filter(Boolean).map(function (e) { return toColumn(e, true); });
       var clear = h('button', { 'class': 'link-btn', type: 'button', text: 'Xóa lựa chọn' });
       clear.addEventListener('click', function () { state.priceSel = []; renderPrice(); });
       el.priceTables.appendChild(h('div', { 'class': 'compare-bar' }, [
-        h('strong', { text: 'So sánh ' + columns.length + ' xe đã chọn' }),
+        h('strong', { text: columns.length > 1 ? 'So sánh ' + columns.length + ' xe đã chọn' : 'Thông tin xe đã chọn (chọn thêm xe để so sánh)' }),
         clear
       ]));
       var holder = h('div');
       el.priceTables.appendChild(holder);
       renderComparison(holder, columns);
-    } else if (state.priceSel.length === 1) {
-      el.priceTables.appendChild(h('div', { 'class': 'empty', text: 'Đã chọn 1 xe. Chọn thêm ít nhất 1 xe nữa để xem bảng so sánh.' }));
     }
 
     setHashQuiet('#price/' + state.priceMin + '-' + (state.priceMax >= SLIDER_MAX ? 'max' : state.priceMax) +

@@ -86,3 +86,27 @@ khi so sánh xe. Quyền sở hữu thuộc về hãng; người vận hành web
 | mitsubishi/destinator | https://www.mitsubishi-motors.com.vn/ |
 | toyota/corolla-cross | https://www.toyota.com.vn/ |
 | toyota/innova-cross | https://www.toyota.com.vn/ |
+
+## Logo hãng
+
+Logo lấy từ Wikimedia Commons (các tệp ghi giấy phép "Public domain" trên Commons). Logo là **nhãn hiệu** của chủ sở hữu, chỉ dùng để nhận diện hãng xe trên trang này.
+
+| Hãng | Tệp trên Commons |
+|---|---|
+| audi | [Audi-Logo 2016.svg](https://commons.wikimedia.org/wiki/File:Audi-Logo_2016.svg) |
+| bmw | [BMW.svg](https://commons.wikimedia.org/wiki/File:BMW.svg) |
+| ford | [Ford Motor Company Logo.svg](https://commons.wikimedia.org/wiki/File:Ford_Motor_Company_Logo.svg) |
+| geely | [Geely Auto 2023.svg](https://commons.wikimedia.org/wiki/File:Geely_Auto_2023.svg) |
+| honda | [Honda Logo.svg](https://commons.wikimedia.org/wiki/File:Honda_Logo.svg) |
+| hyundai | [Hyundai Motor Company logo.svg](https://commons.wikimedia.org/wiki/File:Hyundai_Motor_Company_logo.svg) |
+| jaecoo | [Jaecoo wordmark.svg](https://commons.wikimedia.org/wiki/File:Jaecoo_wordmark.svg) |
+| kia | [KIA logo3.svg](https://commons.wikimedia.org/wiki/File:KIA_logo3.svg) |
+| lynkco | [Lynk & Co 2016 logo.svg](https://commons.wikimedia.org/wiki/File:Lynk_&_Co_2016_logo.svg) |
+| mazda | [Mazda logo 2024.svg](https://commons.wikimedia.org/wiki/File:Mazda_logo_2024.svg) |
+| mercedes | [Mercedes-Benz Logo 2010.svg](https://commons.wikimedia.org/wiki/File:Mercedes-Benz_Logo_2010.svg) |
+| mg | [MG Motor 2021 logo.svg](https://commons.wikimedia.org/wiki/File:MG_Motor_2021_logo.svg) |
+| mitsubishi | [Mitsubishi motors new logo.svg](https://commons.wikimedia.org/wiki/File:Mitsubishi_motors_new_logo.svg) |
+| suzuki | [Suzuki logo 2025.svg](https://commons.wikimedia.org/wiki/File:Suzuki_logo_2025.svg) |
+| toyota | [Toyota Logo.svg](https://commons.wikimedia.org/wiki/File:Toyota_Logo.svg) |
+| vinfast | [VinFast logo (simple variant).svg](https://commons.wikimedia.org/wiki/File:VinFast_logo_(simple_variant).svg) |
+| volkswagen | [Volkswagen logo 2019.svg](https://commons.wikimedia.org/wiki/File:Volkswagen_logo_2019.svg) |
