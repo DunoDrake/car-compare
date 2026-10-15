@@ -249,3 +249,5 @@ th .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; ma
 .total-row td { font-size: 17px; font-weight: 800; }
 .total-row small { display: block; font-size: 12px; font-weight: 600; }
 .onroad-group h3 { color: var(--accent); }
+.variant-chip { flex-wrap: wrap; }
+.chip-road { color: var(--accent); font-weight: 700; }

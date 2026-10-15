@@ -647,16 +647,18 @@
     });
   }
 
-  function renderVariantPicker(model) {
+  function renderVariantPicker(brand, model) {
     el.variantPicker.textContent = '';
     model.variants.forEach(function (v, i) {
+      var road = calcOnRoad({ brand: brand, model: model, variant: v });
       var chip = h('button', {
         'class': 'variant-chip',
         type: 'button',
         'aria-pressed': String(!!state.selected[i])
       }, [
         h('span', { text: v.name }),
-        h('small', { text: formatPrice(v.price) })
+        h('small', { text: formatPrice(v.price) }),
+        road ? h('small', { 'class': 'chip-road', text: 'Lăn bánh ~' + formatMillion(road.total) }) : null
       ]);
       chip.addEventListener('click', function () {
         var count = Object.keys(state.selected).filter(function (k) { return state.selected[k]; }).length;
@@ -692,7 +694,7 @@
     el.cmpTitle.textContent = model.name;
     el.cmpMeta.textContent = model.type + ' · ' + model.variants.length + ' phiên bản';
     renderHero(brand, model);
-    renderVariantPicker(model);
+    renderVariantPicker(brand, model);
     var columns = [];
     model.variants.forEach(function (v, i) {
       if (!state.selected[i]) return;
