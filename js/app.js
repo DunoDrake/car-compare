@@ -106,7 +106,7 @@
     return brand ? brand.models.filter(function (m) { return m.id === id; })[0] : undefined;
   }
 
-  // Thứ tự ưu tiên: fill (bổ sung) < common < force (kích thước chuẩn) < variant.
+  // Thứ tự ưu tiên: fill (bổ sung) < common < force (kích thước chuẩn) < variant < brochure (chính hãng).
   function mergedGroup(model, variant, key) {
     var out = {};
     var extra = (window.CAR_SPECS_EXTRA || {})[model._key] || {};
@@ -114,7 +114,11 @@
     var force = (extra.force && extra.force[key]) || {};
     var base = (model.common && model.common[key]) || {};
     var over = variant[key] || {};
-    [fill, base, force, over].forEach(function (layer) {
+    var bro = (window.CAR_BROCHURE || {})[model._key];
+    var broLayer = (bro && bro.variants && bro.variants[variant.name] && bro.variants[variant.name][key]) || {};
+    var hasBrochure = !!(bro && bro.variants && bro.variants[variant.name]);
+    // Có brochure của đúng phiên bản thì bỏ lớp bổ sung tổng hợp (oto360) để khỏi lẫn "bản tham chiếu".
+    [hasBrochure ? {} : fill, base, force, over, broLayer].forEach(function (layer) {
       Object.keys(layer).forEach(function (k) { out[k] = layer[k]; });
     });
     return out;
@@ -357,6 +361,12 @@
     return box;
   }
 
+  function brochureFor(entry) {
+    var b = (window.CAR_BROCHURE || {})[entry.brand.id + '/' + entry.model.id];
+    if (!b || !b.variants || !b.variants[entry.variant.name]) return null;
+    return b.source;
+  }
+
   function reviewFor(entry) {
     var all = window.CAR_REVIEWS || {};
     return all[entry.brand.id + '|' + entry.model.id + '|' + entry.variant.name] || null;
@@ -369,6 +379,7 @@
       name: entry.variant.name,
       price: entry.variant.price,
       image: imageFor(entry.brand.id, entry.model.id),
+      brochure: brochureFor(entry),
       onroad: calcOnRoad(entry),
       review: reviewFor(entry),
       data: {
@@ -585,6 +596,24 @@
         : h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), tbody])]);
       container.appendChild(h('div', { 'class': 'group' }, [h('h3', { text: g.title }), body]));
     });
+
+    if (columns.some(function (c) { return c.brochure; })) {
+      var srcRow = h('tr', null, [h('th', { text: 'Nguồn thông số' })]);
+      columns.forEach(function (c) {
+        var td = h('td', { 'class': 'opinion sources' });
+        if (c.brochure) {
+          td.appendChild(h('a', { href: c.brochure.url, target: '_blank', rel: 'noopener noreferrer', text: c.brochure.name }));
+        } else {
+          td.className += ' na';
+          td.textContent = 'Tổng hợp (oto360, ước tính)';
+        }
+        srcRow.appendChild(td);
+      });
+      container.appendChild(h('div', { 'class': 'group' }, [
+        h('h3', { text: 'Nguồn thông số' }),
+        h('div', { 'class': 'table-scroll' }, [h('table', null, [makeHead(), h('tbody', null, [srcRow])])])
+      ]));
+    }
 
     renderReviews(container, columns, makeHead);
   }
