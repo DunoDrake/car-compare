@@ -1,4 +1,62 @@
 ﻿hãng,mẫu,phiên bản,giá (triệu)
+Audi,Q3,SUV TFSI Advanced,2099
+Audi,Q3,Sportback TFSI S line,2199
+Audi,Q5,45 TFSI quattro S line,2849
+Audi,Q5,Sportback 45 TFSI quattro S line,2949
+Audi,A6,45 TFSI,2690
+BMW,3 Series,320i Sport Line,1379
+BMW,3 Series,320i M Sport,1512
+BMW,3 Series,330i M Sport,1789
+BMW,X3,sDrive20i,1855
+BMW,X3,xDrive30i M Sport,2079
+BMW,X5,xDrive40i xLine,3899
+BMW,X5,xDrive40i M Sport,3489
+Ford,Ranger,XLS 2.0 4x2 AT,726
+Ford,Ranger,XLS 2.0 4x4 AT,795
+Ford,Ranger,Wildtrak 2.0 Bi-Turbo 4x4 AT,973
+Ford,Ranger,Wildtrak 3.0 V6 4x4 AT,1093
+Ford,Ranger,Raptor 3.0 V6 EcoBoost,1299
+Ford,Everest,Active 2.0 4x2 AT,1129
+Ford,Everest,Sport 2.0 4x2 AT,1209
+Ford,Everest,Platinum 2.0 4x2 AT,1335
+Ford,Everest,Platinum 2.0 Bi-Turbo 4x4 AT,1440
+Ford,Everest,Platinum+ 2.3 EcoBoost 4x4 AT,1629
+Ford,Territory,Trend,739
+Ford,Territory,Titanium,819
+Ford,Territory,Titanium X,875
+Geely,Coolray,Executive,499
+Geely,Coolray,Premium,549
+Geely,Coolray,Flagship,599
+Geely,Okavango,Executive,739
+Geely,Okavango,Premium,799
+Geely,EX5,Max,839
+Geely,EX5,Pro,889
+Honda,City,L,539
+Honda,City,RS,569
+Honda,HR-V,G,669
+Honda,HR-V,L,750
+Honda,HR-V,e:HEV RS,835
+Honda,CR-V,G,1039
+Honda,CR-V,L,1099
+Honda,CR-V,L AWD,1250
+Honda,CR-V,e:HEV L,1170
+Honda,CR-V,e:HEV RS,1250
+Hyundai,Accent,1.5 MT Tiêu chuẩn,439
+Hyundai,Accent,1.5 AT,489
+Hyundai,Accent,1.5 AT Đặc biệt,529
+Hyundai,Accent,1.5 AT Cao cấp,569
+Hyundai,Creta,1.5 Tiêu chuẩn,599
+Hyundai,Creta,1.5 Đặc biệt,659
+Hyundai,Creta,1.5 Cao cấp,705
+Hyundai,Stargazer,1.5 Tiêu chuẩn,489
+Hyundai,Stargazer,1.5 Đặc biệt,569
+Hyundai,Stargazer,1.5 Cao cấp,615
+Jaecoo,J5,Premium (xăng),599
+Jaecoo,J5,SHS-H Premium (hybrid),669
+Jaecoo,J5,SHS-H Flagship (hybrid),749
+Jaecoo,J5,EV Flagship,749
+Jaecoo,J7,Flagship (FWD),799
+Jaecoo,J7,AWD,849
 Kia,Sonet,1.5L AT,450
 Kia,Sonet,1.5L Deluxe,489
 Kia,Sonet,1.5L Luxury,529
@@ -13,16 +71,39 @@ Kia,Carnival,2.2D Luxury 8S,1299
 Kia,Carnival,2.2D Premium 7S,1499
 Kia,Carnival,2.2D Signature 7S,1569
 Kia,Carnival,Hybrid 1.6T Signature 7S,1719
-Hyundai,Accent,1.5 MT Tiêu chuẩn,439
-Hyundai,Accent,1.5 AT,489
-Hyundai,Accent,1.5 AT Đặc biệt,529
-Hyundai,Accent,1.5 AT Cao cấp,569
-Hyundai,Creta,1.5 Tiêu chuẩn,599
-Hyundai,Creta,1.5 Đặc biệt,659
-Hyundai,Creta,1.5 Cao cấp,705
-Hyundai,Stargazer,1.5 Tiêu chuẩn,489
-Hyundai,Stargazer,1.5 Đặc biệt,569
-Hyundai,Stargazer,1.5 Cao cấp,615
+Kia,Sorento,2.5G Signature FWD,1199
+Kia,Sorento,2.5G Signature AWD,1279
+Kia,Sorento,2.2D Signature FWD,1339
+Kia,Sorento,2.2D Signature AWD,1419
+Kia,Sorento,Hybrid 1.6T Premium,1149
+Kia,Sorento,HEV 1.6T Signature AWD,1399
+Lynk & Co,01,Hyper,919
+Lynk & Co,01,Hyper Pro,999
+Lynk & Co,08,EM-P Pro,1299
+Lynk & Co,08,EM-P Halo,1389
+Lynk & Co,09,09,2199
+Mazda,Mazda3,1.5 Deluxe,569
+Mazda,Mazda3,1.5 Luxury,644
+Mazda,Mazda3,1.5 Premium,719
+Mazda,CX-5,2.0 Deluxe,699
+Mazda,CX-5,2.0 Luxury,789
+Mazda,CX-5,2.0 Premium,829
+Mazda,CX-5,2.0 Premium Sport,849
+Mazda,CX-5,2.0 Premium Exclusive,869
+Mazda,CX-30,2.0 Luxury,699
+Mazda,CX-30,2.0 Premium,749
+Mazda,CX-8,2.5 Luxury,899
+Mazda,CX-8,2.5 Luxury (Tùy chọn),949
+Mazda,CX-8,2.5 Premium,1019
+Mazda,CX-8,2.5 Signature AWD,1149
+Mercedes-Benz,C-Class,C 200 Avantgarde,1599
+Mercedes-Benz,C-Class,C 200 Avantgarde Plus,1769
+Mercedes-Benz,C-Class,C 300 AMG,2099
+Mercedes-Benz,GLC,GLC 200 4MATIC,2299
+Mercedes-Benz,GLC,GLC 300 4MATIC,2839
+Mercedes-Benz,E-Class,E 200 Avantgarde,2449
+Mercedes-Benz,E-Class,E 200 Exclusive,2589
+Mercedes-Benz,E-Class,E 300 AMG,3209
 Mitsubishi,Xpander,MT,568
 Mitsubishi,Xpander,AT,598
 Mitsubishi,Xpander,AT Premium,659
@@ -32,66 +113,8 @@ Mitsubishi,Xforce,Luxury,665
 Mitsubishi,Xforce,Ultimate,720
 Mitsubishi,Destinator,Premium,780
 Mitsubishi,Destinator,Ultimate,855
-Honda,City,L,539
-Honda,City,RS,569
-Honda,HR-V,G,669
-Honda,HR-V,L,750
-Honda,HR-V,e:HEV RS,835
-Honda,CR-V,G,1039
-Honda,CR-V,L,1099
-Honda,CR-V,L AWD,1250
-Honda,CR-V,e:HEV L,1170
-Honda,CR-V,e:HEV RS,1250
-Mazda,Mazda3,1.5 Deluxe,569
-Mazda,Mazda3,1.5 Luxury,644
-Mazda,Mazda3,1.5 Premium,719
-Mazda,CX-5,2.0 Deluxe,699
-Mazda,CX-5,2.0 Luxury,789
-Mazda,CX-5,2.0 Premium,829
-Mazda,CX-5,2.0 Premium Exclusive,869
-Mazda,CX-30,2.0 Luxury,699
-Mazda,CX-30,2.0 Premium,749
-Audi,Q3,SUV TFSI Advanced,2099
-Audi,Q3,Sportback TFSI S line,2199
-Audi,Q5,45 TFSI quattro S line,2849
-Audi,Q5,Sportback 45 TFSI quattro S line,2949
-Audi,A6,45 TFSI,2690
-Mercedes-Benz,C-Class,C 200 Avantgarde,1599
-Mercedes-Benz,C-Class,C 200 Avantgarde Plus,1769
-Mercedes-Benz,C-Class,C 300 AMG,2099
-Mercedes-Benz,GLC,GLC 200 4MATIC,2299
-Mercedes-Benz,GLC,GLC 300 4MATIC,2839
-Mercedes-Benz,E-Class,E 200 Avantgarde,2449
-Mercedes-Benz,E-Class,E 200 Exclusive,2589
-Mercedes-Benz,E-Class,E 300 AMG,3209
-BMW,3 Series,320i Sport Line,1379
-BMW,3 Series,320i M Sport,1512
-BMW,3 Series,330i M Sport,1789
-BMW,X3,sDrive20i,1855
-BMW,X3,xDrive30i M Sport,2079
-BMW,X5,xDrive40i xLine,3899
-BMW,X5,xDrive40i M Sport,3489
-Volkswagen,Virtus,Elegance,949
-Volkswagen,Virtus,Luxury,1069
-Volkswagen,Tiguan,Facelift,1599
-Volkswagen,Tiguan,Platinum,1688
-Volkswagen,Teramont,X Base,1998
-Volkswagen,Teramont,X Limited,2138
-Volkswagen,Teramont,X Platinum,2168
-Volkswagen,Teramont,President,2488
-Ford,Ranger,XLS 2.0 4x2 AT,726
-Ford,Ranger,XLS 2.0 4x4 AT,795
-Ford,Ranger,Wildtrak 2.0 Bi-Turbo 4x4 AT,973
-Ford,Ranger,Wildtrak 3.0 V6 4x4 AT,1093
-Ford,Ranger,Raptor 3.0 V6 EcoBoost,1299
-Ford,Everest,Active 2.0 4x2 AT,1129
-Ford,Everest,Sport 2.0 4x2 AT,1209
-Ford,Everest,Platinum 2.0 4x2 AT,1335
-Ford,Everest,Platinum 2.0 Bi-Turbo 4x4 AT,1440
-Ford,Everest,Platinum+ 2.3 EcoBoost 4x4 AT,1629
-Ford,Territory,Trend,739
-Ford,Territory,Titanium,819
-Ford,Territory,Titanium X,875
+Suzuki,XL7,Hybrid Black Edition,599
+Suzuki,Fronx,GLX Plus,649
 Toyota,Raize,1.0 Turbo,510
 Toyota,Vios,1.5E MT,458
 Toyota,Vios,1.5E CVT,488
@@ -104,5 +127,11 @@ Toyota,Innova Cross,2.0 HEV,960
 Toyota,Fortuner,2.7AT 4x2,1155
 Toyota,Fortuner,Legender 2.7AT 4x2,1290
 Toyota,Fortuner,Legender 2.7AT 4x4,1395
-Suzuki,XL7,Hybrid Black Edition,599
-Suzuki,Fronx,GLX Plus,649
+Volkswagen,Virtus,Elegance,949
+Volkswagen,Virtus,Luxury,1069
+Volkswagen,Tiguan,Facelift,1599
+Volkswagen,Tiguan,Platinum,1688
+Volkswagen,Teramont,X Base,1998
+Volkswagen,Teramont,X Limited,2138
+Volkswagen,Teramont,X Platinum,2168
+Volkswagen,Teramont,President,2488

@@ -221,6 +221,67 @@
           features: { 'Cảnh báo điểm mù BSD': true, 'Cảnh báo va chạm phía trước FCA': true, 'Giữ làn đường LKA': true }
         }
       ]
+    },
+    {
+      id: 'sorento',
+      name: 'Sorento',
+      type: 'SUV 7 chỗ hạng D',
+      common: {
+        specs: {
+          'Động cơ': 'Smartstream G2.5 (2.5L xăng, 4 xi-lanh)',
+          'Công suất': '191 hp',
+          'Mô-men xoắn': '246 Nm',
+          'Hộp số': 'Tự động 8 cấp',
+          'Dẫn động': 'FWD (cầu trước)',
+          'Nhiên liệu': 'Xăng',
+          'Số chỗ ngồi': '7',
+          'Kích thước D x R x C': '4.810 x 1.900 x 1.695 mm',
+          'Chiều dài cơ sở': '2.815 mm',
+          'Phanh': 'Đĩa trước / đĩa sau'
+        },
+        interior: {
+          'Chất liệu ghế': 'Da',
+          'Ghế lái': 'Chỉnh điện, nhớ vị trí',
+          'Màn hình giải trí': '12.3 inch',
+          'Màn hình táp-lô': 'LCD 12.3 inch',
+          'Điều hòa': 'Tự động 3 vùng',
+          'Hệ thống loa': '12 loa Bose',
+          'Cửa gió hàng ghế sau': true,
+          'Cửa sổ trời': 'Toàn cảnh'
+        },
+        features: {
+          'Túi khí': '7 túi khí',
+          'Cân bằng điện tử ESC': true,
+          'Camera lùi': '360 độ',
+          'Cảm biến đỗ xe': 'Trước & sau',
+          'Cruise control': 'Thích ứng thông minh (SCC)',
+          'Chìa khóa thông minh & Start/Stop': true,
+          'Cốp điện': true,
+          'Sạc không dây': true,
+          'Kết nối Apple CarPlay / Android Auto': true
+        }
+      },
+      variants: [
+        { name: '2.5G Signature FWD', price: 1199 },
+        { name: '2.5G Signature AWD', price: 1279, specs: { 'Dẫn động': 'AWD (4 bánh)' } },
+        {
+          name: '2.2D Signature FWD', price: 1339,
+          specs: { 'Động cơ': 'Smartstream D2.2 (2.2L diesel)', 'Công suất': '202 hp', 'Mô-men xoắn': '440 Nm', 'Hộp số': 'Ly hợp kép 8 cấp', 'Nhiên liệu': 'Dầu diesel' }
+        },
+        {
+          name: '2.2D Signature AWD', price: 1419,
+          specs: { 'Động cơ': 'Smartstream D2.2 (2.2L diesel)', 'Công suất': '202 hp', 'Mô-men xoắn': '440 Nm', 'Hộp số': 'Ly hợp kép 8 cấp', 'Dẫn động': 'AWD (4 bánh)', 'Nhiên liệu': 'Dầu diesel' }
+        },
+        {
+          name: 'Hybrid 1.6T Premium', price: 1149,
+          specs: { 'Động cơ': 'Smartstream G1.6 T-GDi Hybrid', 'Công suất': '230 hp (tổng hợp)', 'Mô-men xoắn': '350 Nm (tổng hợp)', 'Hộp số': 'Tự động 6 cấp', 'Nhiên liệu': 'Xăng (hybrid)' },
+          interior: { 'Hệ thống loa': 'Đang cập nhật' }
+        },
+        {
+          name: 'HEV 1.6T Signature AWD', price: 1399,
+          specs: { 'Động cơ': 'Smartstream G1.6 T-GDi Hybrid', 'Công suất': '230 hp (tổng hợp)', 'Mô-men xoắn': '350 Nm (tổng hợp)', 'Hộp số': 'Tự động 6 cấp', 'Dẫn động': 'AWD (4 bánh)', 'Nhiên liệu': 'Xăng (hybrid)' }
+        }
+      ]
     }
   ]
 });

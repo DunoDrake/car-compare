@@ -41,6 +41,7 @@
     cmpBrand: document.getElementById('cmpBrand'),
     cmpTitle: document.getElementById('cmpTitle'),
     cmpMeta: document.getElementById('cmpMeta'),
+    cmpHero: document.getElementById('cmpHero'),
     variantPicker: document.getElementById('variantPicker'),
     compareTables: document.getElementById('compareTables'),
     crossView: document.getElementById('crossView'),
@@ -147,6 +148,31 @@
     return out;
   }
 
+  function imageFor(brandId, modelId) {
+    var all = window.CAR_IMAGES || {};
+    return all[brandId + '/' + modelId] || null;
+  }
+
+  function creditText(img) {
+    return 'Ảnh: ' + img.author + ', ' + img.license + ' (Wikimedia Commons)';
+  }
+
+  // Ảnh xe hoặc khung placeholder theo màu hãng khi chưa có ảnh.
+  function thumbEl(brand, model, size) {
+    var img = imageFor(brand.id, model.id);
+    var box = h('div', { 'class': 'thumb thumb-' + size });
+    if (img) {
+      box.appendChild(h('img', {
+        src: img.src, alt: brand.name + ' ' + model.name, loading: 'lazy', decoding: 'async'
+      }));
+    } else {
+      box.className += ' thumb-empty';
+      box.style.setProperty('--brand', brand.color);
+      box.appendChild(h('span', { text: brand.name + ' ' + model.name }));
+    }
+    return box;
+  }
+
   function reviewFor(entry) {
     var all = window.CAR_REVIEWS || {};
     return all[entry.brand.id + '|' + entry.model.id + '|' + entry.variant.name] || null;
@@ -158,6 +184,7 @@
       color: entry.brand.color,
       name: entry.variant.name,
       price: entry.variant.price,
+      image: imageFor(entry.brand.id, entry.model.id),
       review: reviewFor(entry),
       data: {
         specs: mergedGroup(entry.model, entry.variant, 'specs'),
@@ -296,6 +323,9 @@
       var tr = h('tr', null, [h('th', { text: 'Hạng mục' })]);
       columns.forEach(function (c) {
         var th = h('th');
+        if (c.title && c.image) {
+          th.appendChild(h('img', { 'class': 'th-thumb', src: c.image.src, alt: c.title, loading: 'lazy', decoding: 'async' }));
+        }
         if (c.title) {
           th.appendChild(h('span', { 'class': 'dot', style: 'background:' + c.color }));
           th.appendChild(h('span', { 'class': 'col-title', text: c.title }));
@@ -438,16 +468,19 @@
       var lo = Math.min.apply(null, prices);
       var hi = Math.max.apply(null, prices);
       var priceText = lo === hi ? formatPrice(lo) : formatPrice(lo) + ' – ' + formatPrice(hi);
+      var img = imageFor(brand.id, m.id);
       var card = h('button', {
         'class': 'model-card',
         type: 'button',
         style: '--brand:' + brand.color
       }, [
+        thumbEl(brand, m, 'card'),
         h('h3', { text: m.name }),
         h('div', { 'class': 'type', text: m.type }),
         h('div', { 'class': 'price', text: priceText }),
         h('div', { 'class': 'count', text: m.variants.length + ' phiên bản' }),
-        h('div', { 'class': 'cta', text: 'So sánh các phiên bản →' })
+        h('div', { 'class': 'cta', text: 'So sánh các phiên bản →' }),
+        img ? h('div', { 'class': 'credit', text: creditText(img) }) : null
       ]);
       card.addEventListener('click', function () { go('#' + brand.id + '/' + m.id); });
       el.modelGrid.appendChild(card);
@@ -475,6 +508,18 @@
     });
   }
 
+  function renderHero(brand, model) {
+    el.cmpHero.textContent = '';
+    el.cmpHero.appendChild(thumbEl(brand, model, 'hero'));
+    var img = imageFor(brand.id, model.id);
+    if (img) {
+      el.cmpHero.appendChild(h('div', { 'class': 'credit' }, [
+        h('span', { text: 'Ảnh minh họa: ' + img.author + ', ' + img.license + ' · ' }),
+        h('a', { href: img.page, target: '_blank', rel: 'noopener noreferrer', text: 'Wikimedia Commons' })
+      ]));
+    }
+  }
+
   function renderModelCompare() {
     var brand = getBrand(state.brandId);
     var model = getModel(brand, state.modelId);
@@ -483,6 +528,7 @@
     el.cmpBrand.style.setProperty('--brand', brand.color);
     el.cmpTitle.textContent = model.name;
     el.cmpMeta.textContent = model.type + ' · ' + model.variants.length + ' phiên bản';
+    renderHero(brand, model);
     renderVariantPicker(model);
     var columns = [];
     model.variants.forEach(function (v, i) {
