@@ -154,13 +154,14 @@
   }
 
   function creditText(img) {
+    if (img.official) return 'Ảnh: ' + img.author;
     return 'Ảnh: ' + img.author + ', ' + img.license + ' (Wikimedia Commons)';
   }
 
   // Ảnh xe hoặc khung placeholder theo màu hãng khi chưa có ảnh.
   function thumbEl(brand, model, size) {
     var img = imageFor(brand.id, model.id);
-    var box = h('div', { 'class': 'thumb thumb-' + size });
+    var box = h('div', { 'class': 'thumb thumb-' + size + (img && img.kind === 'render' ? ' thumb-render' : '') });
     if (img) {
       box.appendChild(h('img', {
         src: img.src, alt: brand.name + ' ' + model.name, loading: 'lazy', decoding: 'async'
@@ -513,9 +514,12 @@
     el.cmpHero.appendChild(thumbEl(brand, model, 'hero'));
     var img = imageFor(brand.id, model.id);
     if (img) {
+      var label = img.official
+        ? 'Ảnh: ' + img.author + ' · '
+        : 'Ảnh minh họa: ' + img.author + ', ' + img.license + ' · ';
       el.cmpHero.appendChild(h('div', { 'class': 'credit' }, [
-        h('span', { text: 'Ảnh minh họa: ' + img.author + ', ' + img.license + ' · ' }),
-        h('a', { href: img.page, target: '_blank', rel: 'noopener noreferrer', text: 'Wikimedia Commons' })
+        h('span', { text: label }),
+        h('a', { href: img.page, target: '_blank', rel: 'noopener noreferrer', text: img.official ? 'Nguồn' : 'Wikimedia Commons' })
       ]));
     }
   }

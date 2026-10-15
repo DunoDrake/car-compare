@@ -230,3 +230,8 @@ th .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; ma
 .th-thumb { display: block; width: 96px; height: 54px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; }
 .site-footer a { color: var(--accent); }
 @media (max-width: 600px) { .thumb-hero { aspect-ratio: 16 / 9; } }
+
+/* ảnh render của hãng: nền studio sáng đồng nhất, xe nằm trọn khung */
+.thumb-render { background: linear-gradient(180deg, #f6f7f9 0%, #e3e6ea 100%); }
+.thumb-render img { object-fit: contain; padding: 6% 4% 4%; }
+.hero .thumb-hero { max-width: 860px; }
