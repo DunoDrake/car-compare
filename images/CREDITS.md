@@ -35,7 +35,33 @@
 | volkswagen/tiguan | [Volkswagen Tiguan III IMG 8388.jpg](https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IMG_8388.jpg) | Alexander-93 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | volkswagen/virtus | [2023 Volkswagen Virtus Topline front 20230520.jpg](https://commons.wikimedia.org/wiki/File:2023_Volkswagen_Virtus_Topline_front_20230520.jpg) | Dairokkan9 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 
-Các mẫu không có trong bảng (Hyundai Accent, Mercedes-Benz GLC) dùng khung placeholder vì không tìm thấy ảnh đúng đời trên Commons.
+Mẫu không có ảnh (VinFast VF 2, Nerio Green) dùng khung placeholder vì chưa tìm được ảnh phù hợp.
+| geely/ex2 | [Geely EX2 E22H Pro Comet Gray 01.jpg](https://commons.wikimedia.org/wiki/File:Geely_EX2_E22H_Pro_Comet_Gray_01.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| geely/monjaro | [Geely Monjaro.jpg](https://commons.wikimedia.org/wiki/File:Geely_Monjaro.jpg) | Milhouse35 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| hyundai/accent | [Hyundai Accent Design 2024 (53443284447).jpg](https://commons.wikimedia.org/wiki/File:Hyundai_Accent_Design_2024_(53443284447).jpg) | RL GNZLZ from Chile | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| lynkco/02 | [2025 Lynk & Co 02 IAA 2025 DSC 2310.jpg](https://commons.wikimedia.org/wiki/File:2025_Lynk_&_Co_02_IAA_2025_DSC_2310.jpg) | Alexander-93 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| lynkco/06 | [Lynk & Co 06 006.jpg](https://commons.wikimedia.org/wiki/File:Lynk_&_Co_06_006.jpg) | Jengtingchen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| lynkco/900 | [Lynk & Co 900 004.jpg](https://commons.wikimedia.org/wiki/File:Lynk_&_Co_900_004.jpg) | KitsuneDP | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| mercedes/glc | [Mercedes-Benz GLC 300 4MATIC (X254, 2024) (54856016753).jpg](https://commons.wikimedia.org/wiki/File:Mercedes-Benz_GLC_300_4MATIC_(X254,_2024)_(54856016753).jpg) | Charles from Port Chester, New York | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| mg/g50 | [Maxus G50 006.jpg](https://commons.wikimedia.org/wiki/File:Maxus_G50_006.jpg) | Jengtingchen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| mg/hs | [MG HS (second generation) DSC 7229.jpg](https://commons.wikimedia.org/wiki/File:MG_HS_(second_generation)_DSC_7229.jpg) | Alexander Migl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| mg/mg4 | [MG4 EV, Worms (P1180575).jpg](https://commons.wikimedia.org/wiki/File:MG4_EV,_Worms_(P1180575).jpg) | Matti Blume | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| mg/mg5 | [2024 MG 5.jpg](https://commons.wikimedia.org/wiki/File:2024_MG_5.jpg) | Calreyn88 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| mg/mg7 | [MG 7 II 001.jpg](https://commons.wikimedia.org/wiki/File:MG_7_II_001.jpg) | JustAnotherCarDesigner | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| mg/rx5 | [Roewe RX5 Shishi 02 2022-05-25.jpg](https://commons.wikimedia.org/wiki/File:Roewe_RX5_Shishi_02_2022-05-25.jpg) | JamesYoung8167 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| mg/zs | [MG ZS Facelift 1X7A6412.jpg](https://commons.wikimedia.org/wiki/File:MG_ZS_Facelift_1X7A6412.jpg) | Alexander Migl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/herio-green | [NewOne - yellow VinFast Herio Green 894.jpg](https://commons.wikimedia.org/wiki/File:NewOne_-_yellow_VinFast_Herio_Green_894.jpg) | Newone | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/limo-green | [VinFast Limo Green Limo Black 01.jpg](https://commons.wikimedia.org/wiki/File:VinFast_Limo_Green_Limo_Black_01.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/minio-green | [Newone-GreenSM VinFast Minio Green 03 (cropped).jpg](https://commons.wikimedia.org/wiki/File:Newone-GreenSM_VinFast_Minio_Green_03_(cropped).jpg) | Newone | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf-mpv-7 | [VinFast VF MPV 7 Silver 01.jpg](https://commons.wikimedia.org/wiki/File:VinFast_VF_MPV_7_Silver_01.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf-wild | [VinFast Wild at GJAW 2025 in Indonesia.jpg](https://commons.wikimedia.org/wiki/File:VinFast_Wild_at_GJAW_2025_in_Indonesia.jpg) | Sulthan Naufal | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+| vinfast/vf3 | [VinFast VF 3 HCMC.jpg](https://commons.wikimedia.org/wiki/File:VinFast_VF_3_HCMC.jpg) | Vnsg304 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf5 | [2025 VinFast VF 5 in Vinfast Blue, front left.jpg](https://commons.wikimedia.org/wiki/File:2025_VinFast_VF_5_in_Vinfast_Blue,_front_left.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf6 | [VinFast VF 6 DSC 8468.jpg](https://commons.wikimedia.org/wiki/File:VinFast_VF_6_DSC_8468.jpg) | Alexander Migl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf7 | [2025 VinFast VF 7 in Vinfast Blue, front right.jpg](https://commons.wikimedia.org/wiki/File:2025_VinFast_VF_7_in_Vinfast_Blue,_front_right.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf8 | [VinFast VF 8 IAA 2023 1X7A0681.jpg](https://commons.wikimedia.org/wiki/File:VinFast_VF_8_IAA_2023_1X7A0681.jpg) | Alexander-93 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| vinfast/vf9 | [VinFast VF 9 Plus Deep Ocean Metallic.jpg](https://commons.wikimedia.org/wiki/File:VinFast_VF_9_Plus_Deep_Ocean_Metallic.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+
 
 ## Ảnh render chính hãng
 

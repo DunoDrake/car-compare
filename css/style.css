@@ -251,3 +251,30 @@ th .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; ma
 .onroad-group h3 { color: var(--accent); }
 .variant-chip { flex-wrap: wrap; }
 .chip-road { color: var(--accent); font-weight: 700; }
+
+/* ---- thanh trượt khoảng giá ---- */
+.range-tabs { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.price-slider { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 12px; margin-bottom: 16px; display: grid; gap: 10px; }
+.slider-label { font-weight: 800; font-size: 18px; }
+.dual-slider { position: relative; height: 28px; }
+.slider-track, .slider-fill { position: absolute; top: 12px; height: 4px; border-radius: 2px; }
+.slider-track { left: 0; right: 0; background: var(--line); }
+.slider-fill { background: var(--accent); }
+.dual-slider input[type=range] {
+  position: absolute; left: 0; top: 0; width: 100%; height: 28px; margin: 0;
+  background: none; pointer-events: none; -webkit-appearance: none; appearance: none;
+}
+.dual-slider input[type=range]::-webkit-slider-runnable-track { background: transparent; height: 28px; }
+.dual-slider input[type=range]::-moz-range-track { background: transparent; height: 28px; }
+.dual-slider input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; pointer-events: auto; width: 22px; height: 22px; margin-top: 3px;
+  border-radius: 50%; background: var(--accent); border: 3px solid var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.35); cursor: grab;
+}
+.dual-slider input[type=range]::-moz-range-thumb {
+  pointer-events: auto; width: 16px; height: 16px; border-radius: 50%; background: var(--accent);
+  border: 3px solid var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.35); cursor: grab;
+}
+.slider-scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+/* thuộc tính hidden phải thắng các luật display của lớp */
+[hidden] { display: none !important; }

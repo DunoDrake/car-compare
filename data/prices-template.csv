@@ -118,6 +118,23 @@ Mercedes-Benz,GLC,GLC 300 4MATIC,2839
 Mercedes-Benz,E-Class,E 200 Avantgarde,2449
 Mercedes-Benz,E-Class,E 200 Exclusive,2589
 Mercedes-Benz,E-Class,E 300 AMG,3209
+MG,ZS,Standard,518
+MG,ZS,Luxury,588
+MG,MG5,New MG5 1.5 MT,399
+MG,MG5,1.5L STD,488
+MG,MG5,1.5L LUX,528
+MG,HS,Deluxe,699
+MG,HS,Luxury,749
+MG,RX5,1.5T STD,739
+MG,RX5,1.5T LUX,829
+MG,G50,MT COM,559
+MG,G50,AT DEL,698
+MG,G50,AT LUX,749
+MG,MG7,1.5T Luxury,738
+MG,MG7,2.0T Luxury,898
+MG,MG7,2.0T Premium,1018
+MG,MG4 EV,DEL,828
+MG,MG4 EV,LUX,948
 Mitsubishi,Xpander,MT,568
 Mitsubishi,Xpander,AT,598
 Mitsubishi,Xpander,AT Premium,659
@@ -143,6 +160,24 @@ Toyota,Innova Cross,2.0 HEV,960
 Toyota,Fortuner,2.7AT 4x2,1155
 Toyota,Fortuner,Legender 2.7AT 4x2,1290
 Toyota,Fortuner,Legender 2.7AT 4x4,1395
+VinFast,VF 2,VF 2,188
+VinFast,Minio Green,Minio Green,188
+VinFast,VF 3,Eco,285
+VinFast,VF 3,Plus,296
+VinFast,Herio Green,Herio Green,450
+VinFast,VF 5,VF 5,496
+VinFast,Nerio Green,Nerio Green,628
+VinFast,VF 6,Eco,646
+VinFast,VF 6,Plus,699
+VinFast,Limo Green,Limo Green,699
+VinFast,VF 7,Eco,740
+VinFast,VF 7,Plus,830
+VinFast,VF 7,Plus Trần Kính,850
+VinFast,VF MPV 7,VF MPV 7,750
+VinFast,VF Wild,VF Wild,860
+VinFast,VF 8,VF 8,899
+VinFast,VF 9,Eco,1348
+VinFast,VF 9,Plus,1529
 Volkswagen,Virtus,Elegance,949
 Volkswagen,Virtus,Luxury,1069
 Volkswagen,Tiguan,Facelift,1599

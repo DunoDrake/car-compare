@@ -5,15 +5,20 @@
     { key: 'interior', title: 'Nội thất' },
     { key: 'features', title: 'Trang bị & an toàn' }
   ];
+  var SLIDER_MIN = 150;
+  var SLIDER_MAX = 3000; // đặt thanh trượt ở mức này nghĩa là không giới hạn trên
+  var SLIDER_STEP = 10;
   var RANGES = [
-    { id: 'under600', label: 'Dưới 600 triệu', test: function (p) { return p < 600; } },
-    { id: '600-900', label: '600 – 900 triệu', test: function (p) { return p >= 600 && p <= 900; } },
-    { id: 'over900', label: 'Trên 900 triệu', test: function (p) { return p > 900; } }
+    { id: 'under600', label: 'Dưới 600 triệu', min: SLIDER_MIN, max: 599 },
+    { id: '600-700', label: '600 – 700 triệu', min: 600, max: 700 },
+    { id: '700-800', label: '700 – 800 triệu', min: 700, max: 800 },
+    { id: '800-900', label: '800 – 900 triệu', min: 800, max: 900 },
+    { id: 'over900', label: 'Trên 900 triệu', min: 901, max: SLIDER_MAX }
   ];
   var MODES = [
     { id: 'brand', label: 'Theo mẫu xe', hash: '' },
     { id: 'cross', label: 'So sánh giữa các hãng', hash: '#compare' },
-    { id: 'price', label: 'Theo tầm giá', hash: '#price/under600' }
+    { id: 'price', label: 'Theo tầm giá', hash: '#price/600-700' }
   ];
   var MAX_COMPARE = 4;
   var PRICE_QUICK_SPECS = ['Nhiên liệu', 'Hộp số', 'Số chỗ ngồi', 'Dẫn động'];
@@ -25,7 +30,9 @@
     selected: {},
     diffOnly: false,
     slots: [],
-    rangeId: RANGES[0].id,
+    priceMin: 600,
+    priceMax: 700,
+    priceBasis: 'list',
     priceBrand: '',
     priceSel: [],
     region: 'TP HCM',
@@ -55,6 +62,7 @@
     priceBrand: document.getElementById('priceBrand'),
     priceHint: document.getElementById('priceHint'),
     priceTables: document.getElementById('priceTables'),
+    priceSlider: document.getElementById('priceSlider'),
     priceList: document.getElementById('priceList'),
     logo: document.getElementById('logo'),
     onroadBar: document.getElementById('onroadBar')
@@ -796,27 +804,114 @@
 
   /* ---------- mode: theo tầm giá ---------- */
 
-  function currentRange() {
-    return RANGES.filter(function (r) { return r.id === state.rangeId; })[0] || RANGES[0];
+  function priceOf(e) {
+    if (state.priceBasis === 'road') {
+      var o = calcOnRoad(e);
+      if (o) return o.total / 1000000;
+    }
+    return e.variant.price;
+  }
+
+  function inPriceRange(p) {
+    return p >= state.priceMin && (state.priceMax >= SLIDER_MAX || p <= state.priceMax);
+  }
+
+  function priceRangeText() {
+    var lo = state.priceMin <= SLIDER_MIN ? 'Dưới ' : '';
+    var hi = state.priceMax >= SLIDER_MAX;
+    if (state.priceMin <= SLIDER_MIN && hi) return 'Mọi mức giá';
+    if (state.priceMin <= SLIDER_MIN) return 'Đến ' + formatPrice(state.priceMax);
+    if (hi) return 'Từ ' + formatPrice(state.priceMin) + ' trở lên';
+    return lo + 'Từ ' + formatPrice(state.priceMin) + ' đến ' + formatPrice(state.priceMax);
+  }
+
+  function presetActive(r) {
+    return r.min === state.priceMin && r.max === state.priceMax;
   }
 
   function renderRangeTabs() {
     el.rangeTabs.textContent = '';
     var entries = allEntries();
     RANGES.forEach(function (r) {
-      var count = entries.filter(function (e) { return r.test(e.variant.price); }).length;
+      var count = entries.filter(function (e) {
+        var p = priceOf(e);
+        return p >= r.min && (r.max >= SLIDER_MAX || p <= r.max);
+      }).length;
       var btn = h('button', {
         'class': 'range-tab',
         type: 'button',
-        'aria-pressed': String(r.id === state.rangeId)
+        'aria-pressed': String(presetActive(r))
       }, [h('span', { text: r.label }), h('small', { text: count + ' phiên bản' })]);
       btn.addEventListener('click', function () {
-        state.rangeId = r.id;
+        state.priceMin = r.min;
+        state.priceMax = r.max;
         state.priceSel = [];
         renderPrice();
       });
       el.rangeTabs.appendChild(btn);
     });
+  }
+
+  var sliderRefs = null;
+
+  function buildPriceSlider() {
+    if (sliderRefs) return;
+    var minInput = h('input', { type: 'range', min: String(SLIDER_MIN), max: String(SLIDER_MAX), step: String(SLIDER_STEP), 'aria-label': 'Giá thấp nhất (triệu)' });
+    var maxInput = h('input', { type: 'range', min: String(SLIDER_MIN), max: String(SLIDER_MAX), step: String(SLIDER_STEP), 'aria-label': 'Giá cao nhất (triệu)' });
+    var label = h('div', { 'class': 'slider-label' });
+    var fill = h('div', { 'class': 'slider-fill' });
+    var track = h('div', { 'class': 'dual-slider' }, [h('div', { 'class': 'slider-track' }), fill, minInput, maxInput]);
+    var basis = h('select', { 'aria-label': 'Lọc theo giá niêm yết hay giá lăn bánh' });
+    basis.appendChild(option('list', 'Lọc theo giá niêm yết', true));
+    basis.appendChild(option('road', 'Lọc theo giá lăn bánh (theo nơi đăng ký đang chọn)', false));
+
+    function onMove(which) {
+      var lo = parseInt(minInput.value, 10);
+      var hi = parseInt(maxInput.value, 10);
+      if (which === 'min' && lo > hi) { hi = lo; maxInput.value = String(hi); }
+      if (which === 'max' && hi < lo) { lo = hi; minInput.value = String(lo); }
+      state.priceMin = lo;
+      state.priceMax = hi;
+      state.priceSel = state.priceSel.filter(function (k) {
+        var e = resolveKey(k);
+        return e && inPriceRange(priceOf(e));
+      });
+      paintSlider();
+      renderRangeTabs();
+      renderPriceResults();
+    }
+    minInput.addEventListener('input', function () { onMove('min'); });
+    maxInput.addEventListener('input', function () { onMove('max'); });
+    basis.addEventListener('change', function () {
+      state.priceBasis = basis.value;
+      state.priceSel = [];
+      renderPrice();
+    });
+
+    el.priceSlider.textContent = '';
+    el.priceSlider.appendChild(label);
+    el.priceSlider.appendChild(track);
+    el.priceSlider.appendChild(h('div', { 'class': 'slider-scale' }, [
+      h('span', { text: formatPrice(SLIDER_MIN) }),
+      h('span', { text: '1 tỷ' }),
+      h('span', { text: '2 tỷ' }),
+      h('span', { text: '3 tỷ trở lên' })
+    ]));
+    el.priceSlider.appendChild(h('label', { 'class': 'field' }, [h('span', { text: 'Cách lọc' }), basis]));
+    sliderRefs = { minInput: minInput, maxInput: maxInput, label: label, fill: fill, basis: basis };
+  }
+
+  function paintSlider() {
+    var r = sliderRefs;
+    var span = SLIDER_MAX - SLIDER_MIN;
+    r.minInput.value = String(Math.max(SLIDER_MIN, Math.min(state.priceMin, SLIDER_MAX)));
+    r.maxInput.value = String(Math.max(SLIDER_MIN, Math.min(state.priceMax, SLIDER_MAX)));
+    var a = (parseInt(r.minInput.value, 10) - SLIDER_MIN) / span * 100;
+    var b = (parseInt(r.maxInput.value, 10) - SLIDER_MIN) / span * 100;
+    r.fill.style.left = a + '%';
+    r.fill.style.width = Math.max(0, b - a) + '%';
+    r.label.textContent = priceRangeText();
+    r.basis.value = state.priceBasis;
   }
 
   function renderPriceBrandFilter() {
@@ -826,22 +921,26 @@
   }
 
   function renderPrice() {
-    var range = currentRange();
+    buildPriceSlider();
+    paintSlider();
     renderRangeTabs();
     renderPriceBrandFilter();
+    renderPriceResults();
+  }
 
+  function renderPriceResults() {
     var list = allEntries()
-      .filter(function (e) { return range.test(e.variant.price); })
+      .filter(function (e) { return inPriceRange(priceOf(e)); })
       .filter(function (e) { return !state.priceBrand || e.brand.id === state.priceBrand; })
-      .sort(function (a, b) { return a.variant.price - b.variant.price; });
+      .sort(function (a, b) { return priceOf(a) - priceOf(b); });
 
     // drop selections that fell out of the current list
     var visible = {};
     list.forEach(function (e) { visible[e.key] = true; });
     state.priceSel = state.priceSel.filter(function (k) { return visible[k]; });
 
-    el.priceHint.textContent = list.length + ' phiên bản trong tầm giá ' + range.label.toLowerCase() +
-      '. Tích chọn tối đa ' + MAX_COMPARE + ' xe để so sánh.';
+    el.priceHint.textContent = list.length + ' phiên bản (' + priceRangeText().toLowerCase() + ', theo giá ' +
+      (state.priceBasis === 'road' ? 'lăn bánh' : 'niêm yết') + '). Tích chọn tối đa ' + MAX_COMPARE + ' xe để so sánh.';
 
     el.priceList.textContent = '';
     list.forEach(function (e) {
@@ -899,7 +998,8 @@
       el.priceTables.appendChild(h('div', { 'class': 'empty', text: 'Đã chọn 1 xe. Chọn thêm ít nhất 1 xe nữa để xem bảng so sánh.' }));
     }
 
-    setHashQuiet('#price/' + state.rangeId + (state.priceSel.length ? '/' + state.priceSel.join(',') : ''));
+    setHashQuiet('#price/' + state.priceMin + '-' + (state.priceMax >= SLIDER_MAX ? 'max' : state.priceMax) +
+      (state.priceBasis === 'road' ? ':road' : '') + (state.priceSel.length ? '/' + state.priceSel.join(',') : ''));
   }
 
   el.priceBrand.addEventListener('change', function () {
@@ -960,11 +1060,19 @@
 
     if (parts[0] === 'price') {
       state.mode = 'price';
-      var range = RANGES.filter(function (r) { return r.id === parts[1]; })[0] || RANGES[0];
-      state.rangeId = range.id;
+      var spec = String(parts[1] || '');
+      state.priceBasis = /:road$/.test(spec) ? 'road' : 'list';
+      spec = spec.replace(/:road$/, '');
+      var legacy = RANGES.filter(function (r) { return r.id === spec; })[0];
+      var mm = spec.match(/^(\d+)-(\d+|max)$/);
+      if (legacy) { state.priceMin = legacy.min; state.priceMax = legacy.max; }
+      else if (mm) {
+        state.priceMin = Math.max(SLIDER_MIN, Math.min(parseInt(mm[1], 10), SLIDER_MAX));
+        state.priceMax = mm[2] === 'max' ? SLIDER_MAX : Math.max(state.priceMin, Math.min(parseInt(mm[2], 10), SLIDER_MAX));
+      } else { state.priceMin = 600; state.priceMax = 700; }
       var sel = (parts[2] || '').split(',').filter(Boolean).filter(function (k) {
         var e = resolveKey(k);
-        return e && range.test(e.variant.price);
+        return e && inPriceRange(priceOf(e));
       });
       state.priceSel = sel.slice(0, MAX_COMPARE);
       renderModeTabs();
