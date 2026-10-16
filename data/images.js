@@ -5,6 +5,17 @@
  * Ảnh chỉ mang tính minh họa, có thể khác đời / phiên bản bán tại Việt Nam.
  */
 window.CAR_IMAGES = {
+  "byd/dolphin": { src: "images/byd/dolphin.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-new-dolphin-2026-271", kind: "render", official: true },
+  "byd/atto-2": { src: "images/byd/atto-2.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-atto-2-272", kind: "render", official: true },
+  "byd/atto-3": { src: "images/byd/atto-3.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-atto-3-269", kind: "render", official: true },
+  "byd/seal": { src: "images/byd/seal.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-seal-268", kind: "render", official: true },
+  "byd/han": { src: "images/byd/han.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-han-275", kind: "render", official: true },
+  "byd/m6": { src: "images/byd/m6.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-m6-273", kind: "render", official: true },
+  "byd/sealion-8": { src: "images/byd/sealion-8.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-sealion-8-277", kind: "render", official: true },
+  "byd/seal-5": { src: "images/byd/seal-5.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-seal-5-dm-i-278", kind: "render", official: true },
+  "byd/sealion-6": { src: "images/byd/sealion-6.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-sealion-6-276", kind: "render", official: true },
+  "byd/m9": { src: "images/byd/m9.png?v=3", title: "Ảnh chính hãng", author: "BYD Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://bydvn.com.vn/xe-byd-m9-279", kind: "render", official: true },
+  "toyota/land-cruiser-fj": { src: "images/toyota/land-cruiser-fj.png?v=3", title: "Ảnh chính hãng", author: "Toyota Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://www.toyota.com.vn/land-cruiser-fj", kind: "render", official: true },
   "audi/a6": { src: "images/audi/a6.png?v=3", title: "Ảnh chính hãng", author: "Audi Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://www.audi.vn/vi/models/a6/a6-sedan-2026/", kind: "render", official: true },
   "audi/q3": { src: "images/audi/q3.png?v=3", title: "Ảnh chính hãng", author: "Audi Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://www.audi.vn/vi/models/q3/q3-suv-2026/", kind: "render", official: true },
   "audi/q5": { src: "images/audi/q5.png?v=3", title: "Ảnh chính hãng", author: "Audi Việt Nam", license: "Ảnh của hãng (dùng minh họa)", licenseUrl: "", page: "https://www.audi.vn/vi/models/q5/q5-suv-2026/", kind: "render", official: true },

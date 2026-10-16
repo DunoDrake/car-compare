@@ -68,6 +68,8 @@ khi so sánh xe. Quyền sở hữu thuộc về hãng; người vận hành web
 | jaecoo/j5 | https://omodajaecoo.vn/product/jaecoo |
 | audi/a6 | https://www.audi.vn/vi/models/a6/a6-sedan-2026/ |
 | bmw/3-series, bmw/x3, bmw/x5 | https://www.bmw.com.sg/en/all-models.html (trang quốc tế) |
+| byd/* (10 mẫu) | https://bydvn.com.vn/ (đại lý chính thức BYD Bitcar) |
+| toyota/land-cruiser-fj | https://www.toyota.com.vn/land-cruiser-fj |
 | volkswagen/teramont, volkswagen/tiguan | https://www.vw.com.vn/vi/sanpham.html |
 | volkswagen/virtus | https://www.volkswagen.co.in/en/models/virtus.html (VW VN không bán Virtus; cắt từ ảnh quảng cáo) |
 
@@ -94,3 +96,4 @@ Logo lấy từ Wikimedia Commons (các tệp ghi giấy phép "Public domain" t
 | toyota | [Toyota Logo.svg](https://commons.wikimedia.org/wiki/File:Toyota_Logo.svg) |
 | vinfast | [VinFast logo (simple variant).svg](https://commons.wikimedia.org/wiki/File:VinFast_logo_(simple_variant).svg) |
 | volkswagen | [Volkswagen logo 2019.svg](https://commons.wikimedia.org/wiki/File:Volkswagen_logo_2019.svg) |
+| byd | [BYD Auto 2022 logo.svg](https://commons.wikimedia.org/wiki/File:BYD_Auto_2022_logo.svg) |

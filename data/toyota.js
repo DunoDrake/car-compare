@@ -302,6 +302,39 @@
           features: { 'Toyota Safety Sense': true, 'Cruise control': 'Thích ứng thông minh', 'Sạc không dây': true }
         }
       ]
+    },
+    {
+      id: 'land-cruiser-fj',
+      name: 'Land Cruiser FJ',
+      type: 'SUV khung gầm rời hạng C',
+      common: {
+        specs: {
+          'Động cơ': '2.7L 2TR-FE, 4 xi-lanh',
+          'Công suất': '163 hp',
+          'Mô-men xoắn': '246 Nm',
+          'Hộp số': 'Tự động 6 cấp',
+          'Dẫn động': '4x4 (2 cầu)',
+          'Nhiên liệu': 'Xăng',
+          'Số chỗ ngồi': '5',
+          'Kích thước D x R x C': '4.575 x 1.855 x 1.960 mm',
+          'Chiều dài cơ sở': '2.580 mm',
+          'Bán kính quay vòng tối thiểu': '5,5 m'
+        },
+        interior: {},
+        features: {
+          'Túi khí': '7 túi khí',
+          'Hỗ trợ khởi hành ngang dốc HAC': true,
+          'Camera lùi': '360 độ',
+          'Cruise control': 'Thích ứng thông minh',
+          'Cảnh báo điểm mù': true,
+          'Cảnh báo lệch làn': true,
+          'Cảnh báo tiền va chạm': true,
+          'Hỗ trợ đổ đèo DAC': true
+        }
+      },
+      variants: [
+        { name: 'Land Cruiser FJ', price: 1198 }
+      ]
     }
   ]
 });
