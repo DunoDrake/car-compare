@@ -1,36 +1,10 @@
 # Nguồn ảnh
 
-Ảnh minh họa lấy từ [Wikimedia Commons](https://commons.wikimedia.org), kích thước 960 px. Mỗi ảnh theo giấy phép của tác giả; ghi nguồn bên dưới. Ảnh chỉ mang tính minh họa, có thể khác đời hoặc phiên bản bán tại Việt Nam.
-
-| Mẫu xe | Tệp trên Commons | Tác giả | Giấy phép |
-|---|---|---|---|
-| audi/a6 | [Audi A6 C9 IAA 2025 DSC 1920.jpg](https://commons.wikimedia.org/wiki/File:Audi_A6_C9_IAA_2025_DSC_1920.jpg) | Alexander-93 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| bmw/3-series | [BMW 3 SERIES LWB SEDAN (G28) China (3).jpg](https://commons.wikimedia.org/wiki/File:BMW_3_SERIES_LWB_SEDAN_(G28)_China_(3).jpg) | Dinkun Chen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| bmw/x3 | [BMW X3 (G08) China.jpg](https://commons.wikimedia.org/wiki/File:BMW_X3_(G08)_China.jpg) | Dinkun Chen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| bmw/x5 | [BMW X5 (G05) China.jpg](https://commons.wikimedia.org/wiki/File:BMW_X5_(G05)_China.jpg) | Dinkun Chen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| geely/coolray | [Moscow - 2026 - Geely Coolray compact crossover.jpg](https://commons.wikimedia.org/wiki/File:Moscow_-_2026_-_Geely_Coolray_compact_crossover.jpg) | Юрий Д.К. | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-| geely/ex5 | [Moscow, Geely EX5 white, June 2026 05.jpg](https://commons.wikimedia.org/wiki/File:Moscow,_Geely_EX5_white,_June_2026_05.jpg) | Retired electrician | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
-| geely/okavango | [Geely Okavango VX11 FL 1.5T Elite 'Hybrid' Porcelain White.jpg](https://commons.wikimedia.org/wiki/File:Geely_Okavango_VX11_FL_1.5T_Elite_'Hybrid'_Porcelain_White.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| jaecoo/j5 | [JAECOO 5.jpg](https://commons.wikimedia.org/wiki/File:JAECOO_5.jpg) | Jaime Sainz de la Maza | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| volkswagen/teramont | [VW Teramont R-Line, Almaty (P1180145).jpg](https://commons.wikimedia.org/wiki/File:VW_Teramont_R-Line,_Almaty_(P1180145).jpg) | Matti Blume | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
-| volkswagen/tiguan | [Volkswagen Tiguan III IMG 8388.jpg](https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IMG_8388.jpg) | Alexander-93 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| volkswagen/virtus | [2023 Volkswagen Virtus Topline front 20230520.jpg](https://commons.wikimedia.org/wiki/File:2023_Volkswagen_Virtus_Topline_front_20230520.jpg) | Dairokkan9 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-
-Mẫu không có ảnh (VinFast VF 2, Nerio Green) dùng khung placeholder vì chưa tìm được ảnh phù hợp.
-| geely/ex2 | [Geely EX2 E22H Pro Comet Gray 01.jpg](https://commons.wikimedia.org/wiki/File:Geely_EX2_E22H_Pro_Comet_Gray_01.jpg) | Ethan Llamas | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| geely/monjaro | [Geely Monjaro.jpg](https://commons.wikimedia.org/wiki/File:Geely_Monjaro.jpg) | Milhouse35 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/g50 | [Maxus G50 006.jpg](https://commons.wikimedia.org/wiki/File:Maxus_G50_006.jpg) | Jengtingchen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/hs | [MG HS (second generation) DSC 7229.jpg](https://commons.wikimedia.org/wiki/File:MG_HS_(second_generation)_DSC_7229.jpg) | Alexander Migl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/mg4 | [MG4 EV, Worms (P1180575).jpg](https://commons.wikimedia.org/wiki/File:MG4_EV,_Worms_(P1180575).jpg) | Matti Blume | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/mg5 | [2024 MG 5.jpg](https://commons.wikimedia.org/wiki/File:2024_MG_5.jpg) | Calreyn88 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/mg7 | [MG 7 II 001.jpg](https://commons.wikimedia.org/wiki/File:MG_7_II_001.jpg) | JustAnotherCarDesigner | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/rx5 | [Roewe RX5 Shishi 02 2022-05-25.jpg](https://commons.wikimedia.org/wiki/File:Roewe_RX5_Shishi_02_2022-05-25.jpg) | JamesYoung8167 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| mg/zs | [MG ZS Facelift 1X7A6412.jpg](https://commons.wikimedia.org/wiki/File:MG_ZS_Facelift_1X7A6412.jpg) | Alexander Migl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-
+Toàn bộ ảnh xe là ảnh render hoặc ảnh studio lấy từ trang chính thức của hãng (Việt Nam, hoặc trang quốc tế khi không có bản VN), đã tách nền, lưu PNG nền trong suốt. Không dùng ảnh chụp ngoài đường. Với ảnh render có biển số mẫu (BMW), phần biển số được xóa. Ảnh chỉ mang tính minh họa, có thể khác đời hoặc phiên bản bán tại Việt Nam.
 
 ## Ảnh render chính hãng
 
-Các mẫu dưới đây dùng ảnh render lấy từ trang chính thức của hãng tại Việt Nam, nền trong suốt, chỉ để minh họa
+Các mẫu dưới đây dùng ảnh lấy từ trang chính thức của hãng, nền trong suốt, chỉ để minh họa
 khi so sánh xe. Quyền sở hữu thuộc về hãng; người vận hành website chịu trách nhiệm về việc sử dụng. Nếu hãng yêu cầu gỡ, xóa tệp tương ứng và mục trong `data/images.js`.
 
 | Mẫu xe | Nguồn |
@@ -88,6 +62,14 @@ khi so sánh xe. Quyền sở hữu thuộc về hãng; người vận hành web
 | mitsubishi/destinator | https://www.mitsubishi-motors.com.vn/ |
 | toyota/corolla-cross | https://www.toyota.com.vn/ |
 | toyota/innova-cross | https://www.toyota.com.vn/ |
+| mg/zs, mg/hs, mg/mg4, mg/mg5, mg/mg7, mg/rx5, mg/g50 | https://mgmotor.vn/ |
+| ford/everest, ford/ranger | https://www.ford.com.vn/ |
+| geely/coolray, geely/ex2, geely/ex5, geely/monjaro, geely/okavango | https://geely.vn/ |
+| jaecoo/j5 | https://omodajaecoo.vn/product/jaecoo |
+| audi/a6 | https://www.audi.vn/vi/models/a6/a6-sedan-2026/ |
+| bmw/3-series, bmw/x3, bmw/x5 | https://www.bmw.com.sg/en/all-models.html (trang quốc tế) |
+| volkswagen/teramont, volkswagen/tiguan | https://www.vw.com.vn/vi/sanpham.html |
+| volkswagen/virtus | https://www.volkswagen.co.in/en/models/virtus.html (VW VN không bán Virtus; cắt từ ảnh quảng cáo) |
 
 ## Logo hãng
 

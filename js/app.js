@@ -28,6 +28,8 @@
     mode: 'brand',
     brandId: null,
     modelId: null,
+    collection: null,
+    lastList: '#',
     selected: {},
     diffOnly: false,
     slots: [],
@@ -47,8 +49,16 @@
   var el = {
     modeTabs: document.getElementById('modeTabs'),
     brandTabs: document.getElementById('brandTabs'),
+    homeView: document.getElementById('homeView'),
+    homeStats: document.getElementById('homeStats'),
+    homeEntries: document.getElementById('homeEntries'),
+    typeTiles: document.getElementById('typeTiles'),
+    shortcuts: document.getElementById('shortcuts'),
+    footBrands: document.getElementById('footBrands'),
     modelView: document.getElementById('modelView'),
     modelViewTitle: document.getElementById('modelViewTitle'),
+    listBanner: document.getElementById('listBanner'),
+    listLogo: document.getElementById('listLogo'),
     modelGrid: document.getElementById('modelGrid'),
     compareView: document.getElementById('compareView'),
     backBtn: document.getElementById('backBtn'),
@@ -66,6 +76,7 @@
     priceBrand: document.getElementById('priceBrand'),
     priceHint: document.getElementById('priceHint'),
     priceTables: document.getElementById('priceTables'),
+    priceTray: document.getElementById('priceTray'),
     priceSlider: document.getElementById('priceSlider'),
     priceFilters: document.getElementById('priceFilters'),
     priceList: document.getElementById('priceList'),
@@ -282,11 +293,26 @@
         h('p', { 'class': 'muted', text: 'Ước tính theo bảng tính của ' + ONROAD.source + ' (' + ONROAD.updated + '). Chưa gồm bảo hiểm vật chất, phụ kiện, phí dịch vụ đại lý hay khuyến mãi tiền mặt.' })
       ])
     ]);
-    el.onroadBar.appendChild(h('div', { 'class': 'onroad-fields' }, [
-      h('label', { 'class': 'field' }, [h('span', { text: 'Đăng ký biển số tại' }), regionSel]),
-      h('label', { 'class': 'field' }, [h('span', { text: 'Hỗ trợ trước bạ' }), promoSel])
+    var summaryInfo = h('small');
+    var paintSummary = function () {
+      var r = regionInfo();
+      summaryInfo.textContent = (r ? r.name + ' · trước bạ ' + r.rate + '%' : state.region) +
+        (state.promo ? ' · hỗ trợ ' + state.promo + '%' : '');
+    };
+    paintSummary();
+    regionSel.addEventListener('change', paintSummary);
+    promoSel.addEventListener('change', paintSummary);
+    el.onroadBar.appendChild(h('summary', null, [
+      h('span', null, [document.createTextNode('Giá lăn bánh tại '), summaryInfo]),
+      h('span', { 'class': 'change', text: 'Thay đổi' })
     ]));
-    el.onroadBar.appendChild(formula);
+    el.onroadBar.appendChild(h('div', { 'class': 'onroad-body' }, [
+      h('div', { 'class': 'onroad-fields' }, [
+        h('label', { 'class': 'field' }, [h('span', { text: 'Đăng ký biển số tại' }), regionSel]),
+        h('label', { 'class': 'field' }, [h('span', { text: 'Hỗ trợ trước bạ' }), promoSel])
+      ]),
+      formula
+    ]));
   }
 
   /* ---------- phân loại xe: kiểu xe, hạng, số chỗ ---------- */
@@ -333,6 +359,48 @@
       if (!state.fSeats[seatBucket(seats)]) return false;
     }
     return true;
+  }
+
+  /* ---------- bộ sưu tập: lọc mẫu xe xuyên hãng (#type/<id>) ---------- */
+
+  function modelMinPrice(model) {
+    return Math.min.apply(null, model.variants.map(function (v) { return v.price; }));
+  }
+
+  function modelMaxSeats(model) {
+    return Math.max.apply(null, model.variants.map(function (v) { return seatsOf(mergedGroup(model, v, 'specs')); }));
+  }
+
+  function isElectric(model) {
+    if (/điện/i.test(model.type || '')) return true;
+    var fuel = mergedGroup(model, model.variants[0], 'specs')['Nhiên liệu'];
+    return fuel === 'Điện';
+  }
+
+  var COLLECTIONS = [
+    { id: 'suv', label: 'SUV / Crossover', test: function (m) { return bodyOf(m) === 'SUV / Crossover'; } },
+    { id: 'sedan', label: 'Sedan', test: function (m) { return bodyOf(m) === 'Sedan'; } },
+    { id: 'mpv', label: 'MPV', test: function (m) { return bodyOf(m) === 'MPV'; } },
+    { id: 'hatchback', label: 'Hatchback / mini', test: function (m) { return bodyOf(m) === 'Hatchback / mini'; } },
+    { id: 'pickup', label: 'Bán tải', test: function (m) { return bodyOf(m) === 'Bán tải'; } },
+    { id: 'ev', label: 'Xe điện', test: isElectric },
+    { id: 'suv7', label: 'SUV 7 chỗ', test: function (m) { return bodyOf(m) === 'SUV / Crossover' && modelMaxSeats(m) >= 7; } },
+    { id: 'luxury', label: 'Xe sang', test: function (m) { return /hạng sang/i.test(m.type || ''); } }
+  ];
+
+  function getCollection(id) {
+    return COLLECTIONS.filter(function (c) { return c.id === id; })[0] || null;
+  }
+
+  function collectionItems(c) {
+    var out = [];
+    BRANDS.forEach(function (b) {
+      b.models.forEach(function (m) {
+        if (c.test(m)) out.push({ brand: b, model: m });
+      });
+    });
+    out.sort(function (a, b) { return modelMinPrice(a.model) - modelMinPrice(b.model); });
+    return out;
   }
 
   function imageFor(brandId, modelId) {
@@ -712,42 +780,120 @@
     });
   }
 
+  function modelCard(brand, m, showBrand) {
+    var prices = m.variants.map(function (v) { return v.price; });
+    var lo = Math.min.apply(null, prices);
+    var hi = Math.max.apply(null, prices);
+    var priceText = lo === hi ? formatPrice(lo) : formatPrice(lo) + ' – ' + formatPrice(hi);
+    var roadTotals = m.variants.map(function (v) {
+      var o = calcOnRoad({ brand: brand, model: m, variant: v });
+      return o ? o.total : null;
+    }).filter(function (x) { return x !== null; });
+    var roadText = roadTotals.length ? 'Lăn bánh từ ' + formatMillion(Math.min.apply(null, roadTotals)) : '';
+    var card = h('button', {
+      'class': 'model-card',
+      type: 'button',
+      style: '--brand:' + brand.color
+    }, [
+      thumbEl(brand, m, 'card'),
+      showBrand ? h('div', { 'class': 'brand-line', text: brand.name }) : null,
+      h('h3', { text: modelLabel(brand, m) }),
+      h('div', { 'class': 'type', text: m.type }),
+      h('div', { 'class': 'price', text: priceText }),
+      roadText ? h('div', { 'class': 'road', text: roadText }) : null,
+      h('div', { 'class': 'count', text: m.variants.length + (m.variants.length > 1 ? ' phiên bản · so sánh →' : ' phiên bản · xem thông tin →') })
+    ]);
+    card.addEventListener('click', function () { go('#' + brand.id + '/' + m.id); });
+    return card;
+  }
+
   function renderModelGrid() {
-    var brand = getBrand(state.brandId);
     el.modelGrid.textContent = '';
+    el.listLogo.hidden = true;
+    el.listLogo.textContent = '';
+    el.listBanner.style.removeProperty('--brand');
+    var coll = state.collection ? getCollection(state.collection) : null;
+    if (coll) {
+      var items = collectionItems(coll);
+      el.modelViewTitle.textContent = coll.label + ' · ' + items.length + ' mẫu xe';
+      items.forEach(function (it) { el.modelGrid.appendChild(modelCard(it.brand, it.model, true)); });
+      return;
+    }
+    var brand = getBrand(state.brandId);
     if (!brand) {
       el.modelViewTitle.textContent = 'Chọn một hãng xe để bắt đầu';
       return;
     }
     el.modelViewTitle.textContent = brand.name + ' · ' + brand.country + ' · ' + brand.models.length + ' mẫu xe';
-    brand.models.forEach(function (m) {
-      var prices = m.variants.map(function (v) { return v.price; });
-      var lo = Math.min.apply(null, prices);
-      var hi = Math.max.apply(null, prices);
-      var priceText = lo === hi ? formatPrice(lo) : formatPrice(lo) + ' – ' + formatPrice(hi);
-      var roadTotals = m.variants.map(function (v) {
-        var o = calcOnRoad({ brand: brand, model: m, variant: v });
-        return o ? o.total : null;
-      }).filter(function (x) { return x !== null; });
-      var roadText = roadTotals.length ? 'Lăn bánh từ ' + formatMillion(Math.min.apply(null, roadTotals)) : '';
-      var img = imageFor(brand.id, m.id);
-      var card = h('button', {
-        'class': 'model-card',
-        type: 'button',
-        style: '--brand:' + brand.color
-      }, [
-        thumbEl(brand, m, 'card'),
-        h('h3', { text: modelLabel(brand, m) }),
-        h('div', { 'class': 'type', text: m.type }),
-        h('div', { 'class': 'price', text: priceText }),
-        roadText ? h('div', { 'class': 'road', text: roadText }) : null,
-        h('div', { 'class': 'count', text: m.variants.length + ' phiên bản' }),
-        h('div', { 'class': 'cta', text: m.variants.length > 1 ? 'So sánh các phiên bản →' : 'Xem thông tin xe →' }),
-        img ? h('div', { 'class': 'credit', text: creditText(img) }) : null
-      ]);
-      card.addEventListener('click', function () { go('#' + brand.id + '/' + m.id); });
-      el.modelGrid.appendChild(card);
+    el.listBanner.style.setProperty('--brand', brand.color);
+    el.listLogo.appendChild(h('img', { src: 'images/logos/' + brand.id + '.svg', alt: brand.name }));
+    el.listLogo.hidden = false;
+    brand.models.forEach(function (m) { el.modelGrid.appendChild(modelCard(brand, m, false)); });
+  }
+
+  /* ---------- trang chủ ---------- */
+
+  function renderHome() {
+    var nModels = 0;
+    var nVariants = 0;
+    BRANDS.forEach(function (b) {
+      nModels += b.models.length;
+      b.models.forEach(function (m) { nVariants += m.variants.length; });
     });
+    el.homeStats.textContent = BRANDS.length + ' hãng · ' + nModels + ' mẫu xe · ' + nVariants + ' phiên bản. Giá niêm yết tham khảo, có giá lăn bánh ước tính theo nơi đăng ký.';
+
+    el.homeEntries.textContent = '';
+    [
+      { title: 'Theo mẫu xe', desc: 'Chọn một mẫu và so sánh các phiên bản của nó', hash: '#kia' },
+      { title: 'So sánh giữa các hãng', desc: 'Đặt tối đa 4 xe cạnh nhau, khác hãng vẫn được', hash: '#compare' },
+      { title: 'Theo tầm giá', desc: 'Kéo thanh giá, lọc kiểu xe và số chỗ', hash: '#price/600-700' }
+    ].forEach(function (e) {
+      var card = h('a', { 'class': 'entry-card', href: e.hash }, [
+        h('strong', { text: e.title }),
+        h('span', { text: e.desc }),
+        h('span', { 'class': 'arrow', text: '→' })
+      ]);
+      el.homeEntries.appendChild(card);
+    });
+
+    el.typeTiles.textContent = '';
+    COLLECTIONS.slice(0, 6).forEach(function (c) {
+      var items = collectionItems(c);
+      if (!items.length) return;
+      var pick = items.filter(function (it) { var i = imageFor(it.brand.id, it.model.id); return i && i.official; })[0] ||
+        items.filter(function (it) { return imageFor(it.brand.id, it.model.id); })[0] || items[0];
+      var tile = h('a', { 'class': 'type-tile', href: '#type/' + c.id }, [
+        thumbEl(pick.brand, pick.model, 'tile'),
+        h('strong', { text: c.label }),
+        h('span', { 'class': 'muted', text: items.length + ' mẫu xe' })
+      ]);
+      el.typeTiles.appendChild(tile);
+    });
+
+    var under600 = 0;
+    allEntries().forEach(function (e) { if (e.variant.price < 600) under600++; });
+    el.shortcuts.textContent = '';
+    [
+      { title: 'Xe dưới 600 triệu', sub: under600 + ' phiên bản', hash: '#price/150-600' },
+      { title: 'SUV 7 chỗ cho gia đình', sub: collectionItems(getCollection('suv7')).length + ' mẫu xe', hash: '#type/suv7' },
+      { title: 'Xe điện', sub: collectionItems(getCollection('ev')).length + ' mẫu xe', hash: '#type/ev' },
+      { title: 'Xe sang', sub: collectionItems(getCollection('luxury')).length + ' mẫu xe', hash: '#type/luxury' }
+    ].forEach(function (r) {
+      el.shortcuts.appendChild(h('a', { 'class': 'shortcut', href: r.hash }, [
+        h('span', null, [h('strong', { text: r.title }), h('small', { text: r.sub })]),
+        h('span', { 'class': 'arrow', text: '→' })
+      ]));
+    });
+  }
+
+  function renderFooter() {
+    el.footBrands.textContent = '';
+    BRANDS.forEach(function (b) {
+      el.footBrands.appendChild(h('li', null, [h('a', { href: '#' + b.id, text: b.name })]));
+    });
+    if (window.matchMedia && window.matchMedia('(min-width: 700px)').matches) {
+      Array.prototype.forEach.call(document.querySelectorAll('.foot-col'), function (d) { d.open = true; });
+    }
   }
 
   function renderVariantPicker(brand, model) {
@@ -793,7 +939,7 @@
     var model = getModel(brand, state.modelId);
     if (!model) return;
     el.cmpBrand.textContent = brand.name;
-    el.cmpBrand.style.setProperty('--brand', brand.color);
+    el.compareView.style.setProperty('--brand', brand.color);
     el.cmpTitle.textContent = modelLabel(brand, model);
     var single = model.variants.length === 1;
     el.cmpMeta.textContent = single
@@ -1160,13 +1306,36 @@
     }
 
     el.priceTables.textContent = '';
+    el.priceTray.textContent = '';
+    el.priceTray.hidden = state.priceSel.length < 1;
     if (state.priceSel.length >= 1) {
       var columns = state.priceSel.map(resolveKey).filter(Boolean).map(function (e) { return toColumn(e, true); });
-      var clear = h('button', { 'class': 'link-btn', type: 'button', text: 'Xóa lựa chọn' });
+      var picked = h('div', { 'class': 'tray-items' });
+      state.priceSel.map(resolveKey).filter(Boolean).forEach(function (e) {
+        var rm = h('button', { 'class': 'tray-chip', type: 'button', title: 'Bỏ chọn', 'aria-label': 'Bỏ chọn ' + e.brand.name + ' ' + e.model.name }, [
+          h('span', { 'class': 'dot', style: 'background:' + e.brand.color }),
+          h('span', { text: e.brand.name + ' ' + e.model.name + ' ' + e.variant.name }),
+          h('span', { 'class': 'x', text: '×' })
+        ]);
+        rm.addEventListener('click', function () {
+          state.priceSel = state.priceSel.filter(function (k) { return k !== e.key; });
+          renderPrice();
+        });
+        picked.appendChild(rm);
+      });
+      var clear = h('button', { 'class': 'link-btn', type: 'button', text: 'Xóa hết' });
       clear.addEventListener('click', function () { state.priceSel = []; renderPrice(); });
+      var jump = h('button', { 'class': 'tray-go', type: 'button', text: columns.length > 1 ? 'Xem so sánh ↓' : 'Xem thông tin ↓' });
+      jump.addEventListener('click', function () {
+        var top = el.priceTables.getBoundingClientRect().top + window.pageYOffset - 70;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+      el.priceTray.appendChild(h('strong', { 'class': 'tray-count', text: state.priceSel.length + '/' + MAX_COMPARE }));
+      el.priceTray.appendChild(picked);
+      el.priceTray.appendChild(clear);
+      el.priceTray.appendChild(jump);
       el.priceTables.appendChild(h('div', { 'class': 'compare-bar' }, [
-        h('strong', { text: columns.length > 1 ? 'So sánh ' + columns.length + ' xe đã chọn' : 'Thông tin xe đã chọn (chọn thêm xe để so sánh)' }),
-        clear
+        h('strong', { text: columns.length > 1 ? 'So sánh ' + columns.length + ' xe đã chọn' : 'Thông tin xe đã chọn (chọn thêm xe để so sánh)' })
       ]));
       var holder = h('div');
       el.priceTables.appendChild(holder);
@@ -1199,12 +1368,16 @@
     });
   }
 
-  function showOnly(mode, modelOpen) {
-    el.brandTabs.hidden = mode !== 'brand';
-    el.modelView.hidden = !(mode === 'brand' && !modelOpen);
-    el.compareView.hidden = !(mode === 'brand' && modelOpen);
+  function showOnly(mode, view) {
+    var inBrand = mode === 'brand';
+    el.homeView.hidden = !(inBrand && view === 'home');
+    el.brandTabs.hidden = !(inBrand && (view === 'home' || view === 'brand'));
+    el.modelView.hidden = !(inBrand && (view === 'brand' || view === 'collection'));
+    el.compareView.hidden = !(inBrand && view === 'model');
     el.crossView.hidden = mode !== 'cross';
     el.priceView.hidden = mode !== 'price';
+    el.modeTabs.hidden = inBrand && view === 'home';
+    el.onroadBar.hidden = !ONROAD || (inBrand && view === 'home');
   }
 
   function go(hash) {
@@ -1257,28 +1430,107 @@
     }
 
     state.mode = 'brand';
+
+    if (parts[0] === 'type' && getCollection(parts[1])) {
+      state.collection = parts[1];
+      state.brandId = null;
+      state.modelId = null;
+      state.lastList = '#type/' + parts[1];
+      renderModeTabs();
+      showOnly('brand', 'collection');
+      renderModelGrid();
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    state.collection = null;
     var brand = getBrand(parts[0]) || null;
     var model = brand && parts[1] ? getModel(brand, parts[1]) : null;
-    state.brandId = brand ? brand.id : (BRANDS[0] && BRANDS[0].id);
+    state.brandId = brand ? brand.id : null;
     var newModelId = model ? model.id : null;
     if (newModelId !== state.modelId) state.selected = {};
     state.modelId = newModelId;
     if (model) {
       model.variants.forEach(function (v, i) { if (state.selected[i] === undefined) state.selected[i] = true; });
+    } else if (brand) {
+      state.lastList = '#' + brand.id;
     }
+    var view = model ? 'model' : (brand ? 'brand' : 'home');
     renderModeTabs();
-    showOnly('brand', !!model);
+    showOnly('brand', view);
     renderBrandTabs();
-    if (model) renderModelCompare(); else renderModelGrid();
+    if (view === 'home') renderHome();
+    else if (model) renderModelCompare();
+    else renderModelGrid();
     window.scrollTo(0, 0);
   }
 
-  el.backBtn.addEventListener('click', function () { go('#' + state.brandId); });
+  el.backBtn.addEventListener('click', function () { go(state.lastList || '#'); });
   el.logo.addEventListener('click', function (e) { e.preventDefault(); go('#'); });
   window.addEventListener('hashchange', applyHash);
 
+  /* ---------- tìm kiếm xe ---------- */
+
+  function initSearch() {
+    var input = document.getElementById('searchInput');
+    var box = document.getElementById('searchResults');
+    var index = [];
+    BRANDS.forEach(function (b) {
+      b.models.forEach(function (m) {
+        var prices = m.variants.map(function (v) { return v.price; });
+        index.push({
+          brand: b, model: m, lo: Math.min.apply(null, prices),
+          hay: normName(b.name + ' ' + modelLabel(b, m) + ' ' + m.name + ' ' + m.type + ' ' + m.variants.map(function (v) { return v.name; }).join(' '))
+        });
+      });
+    });
+    var active = -1;
+    var shown = [];
+
+    function close() { box.hidden = true; input.setAttribute('aria-expanded', 'false'); active = -1; }
+    function pick(item) {
+      close(); input.value = ''; input.blur();
+      go('#' + item.brand.id + '/' + item.model.id);
+    }
+    function paintActive() {
+      Array.prototype.forEach.call(box.children, function (c, i) { c.classList.toggle('is-active', i === active); });
+    }
+    function update() {
+      var terms = normName(input.value).split(' ').filter(Boolean);
+      if (!terms.length) { close(); return; }
+      shown = index.filter(function (it) {
+        return terms.every(function (t) { return it.hay.indexOf(t) !== -1; });
+      }).slice(0, 8);
+      box.textContent = '';
+      if (!shown.length) box.appendChild(h('div', { 'class': 'search-empty', text: 'Không tìm thấy xe phù hợp' }));
+      shown.forEach(function (it) {
+        var row = h('button', { 'class': 'search-item', type: 'button', role: 'option' }, [
+          h('span', { text: it.brand.name + ' ' + modelLabel(it.brand, it.model) }),
+          h('small', { text: 'từ ' + formatPrice(it.lo) })
+        ]);
+        row.addEventListener('mousedown', function (e) { e.preventDefault(); pick(it); });
+        box.appendChild(row);
+      });
+      active = shown.length ? 0 : -1;
+      paintActive();
+      box.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    }
+    input.addEventListener('input', update);
+    input.addEventListener('focus', update);
+    input.addEventListener('blur', close);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { close(); input.blur(); }
+      else if (e.key === 'ArrowDown' && shown.length) { e.preventDefault(); active = (active + 1) % shown.length; paintActive(); }
+      else if (e.key === 'ArrowUp' && shown.length) { e.preventDefault(); active = (active + shown.length - 1) % shown.length; paintActive(); }
+      else if (e.key === 'Enter' && shown[active]) { e.preventDefault(); pick(shown[active]); }
+    });
+  }
+
   loadPrefs();
+  initSearch();
   renderOnroadBar();
+  renderFooter();
   applyHash();
   loadLivePrices();
 })();

@@ -3,24 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>So sánh xe ô tô theo phiên bản</title>
-  <link rel="stylesheet" href="css/style.css?v=20261016f">
+  <title>CarCompare – So sánh xe ô tô tại Việt Nam</title>
+  <meta name="description" content="So sánh thông số, trang bị và giá lăn bánh của 70+ mẫu ô tô tại Việt Nam: theo phiên bản, giữa các hãng và theo tầm giá.">
+  <meta name="theme-color" content="#0f1218">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:title" content="CarCompare – So sánh xe ô tô tại Việt Nam">
+  <meta property="og:description" content="So sánh thông số, trang bị và giá lăn bánh ô tô theo phiên bản, giữa các hãng và theo tầm giá.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css?v=20261016k">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
       <a class="logo" href="#" id="logo">Car<span>Compare</span></a>
-      <p class="tagline">So sánh thông số, nội thất và trang bị giữa các phiên bản, các hãng và theo tầm giá</p>
+      <p class="tagline">So sánh thông số, trang bị và giá lăn bánh</p>
+      <div class="search" id="search">
+        <input type="search" id="searchInput" placeholder="Tìm xe: Seltos, Vios, VF 8…" autocomplete="off" aria-label="Tìm xe" aria-controls="searchResults" aria-expanded="false">
+        <div class="search-results" id="searchResults" role="listbox" hidden></div>
+      </div>
     </div>
   </header>
 
   <main class="wrap">
     <nav class="mode-tabs" id="modeTabs" aria-label="Chế độ so sánh"></nav>
-    <section class="onroad-bar" id="onroadBar" aria-label="Cài đặt giá lăn bánh"></section>
+    <details class="onroad-bar" id="onroadBar" aria-label="Cài đặt giá lăn bánh"></details>
+    <section id="homeView" hidden>
+      <div class="home-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Thông số · Giá niêm yết · Giá lăn bánh</p>
+          <h1>So sánh xe ô tô tại Việt Nam, kèm giá lăn bánh</h1>
+          <p class="home-sub" id="homeStats"></p>
+        </div>
+        <div class="hero-cars" aria-hidden="true">
+          <img class="car car-back" src="images/ford/territory.png" alt="" decoding="async">
+          <img class="car car-left" src="images/hyundai/creta.png" alt="" decoding="async">
+          <img class="car car-main" src="images/honda/crv.png" alt="" fetchpriority="high" decoding="async">
+        </div>
+        <div class="entry-grid" id="homeEntries"></div>
+      </div>
+      <h2 class="section-title">Chọn theo loại xe</h2>
+      <div class="type-grid" id="typeTiles"></div>
+      <h2 class="section-title">Bạn đang tìm xe như thế nào?</h2>
+      <div class="shortcut-list" id="shortcuts"></div>
+      <h2 class="section-title">Chọn theo hãng</h2>
+    </section>
+
     <nav class="brand-tabs" id="brandTabs" aria-label="Chọn hãng xe"></nav>
 
     <section id="modelView">
-      <h2 class="section-title" id="modelViewTitle"></h2>
+      <div class="list-banner" id="listBanner">
+        <div>
+          <a class="back-btn" href="#">← Trang chủ</a>
+          <h2 class="section-title" id="modelViewTitle"></h2>
+        </div>
+        <span class="logo-tile banner-logo" id="listLogo" hidden></span>
+      </div>
       <div class="model-grid" id="modelGrid"></div>
     </section>
 
@@ -57,41 +95,64 @@
         </label>
         <p class="muted" id="priceHint"></p>
       </div>
-      <div id="priceTables"></div>
       <div class="price-list" id="priceList"></div>
+      <div class="tray" id="priceTray" hidden></div>
+      <div id="priceTables"></div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
+      <div class="foot-grid">
+        <details class="foot-col">
+          <summary>Công cụ</summary>
+          <ul>
+            <li><a href="#">Trang chủ</a></li>
+            <li><a href="#kia">Theo mẫu xe</a></li>
+            <li><a href="#compare">So sánh giữa các hãng</a></li>
+            <li><a href="#price/600-700">Theo tầm giá</a></li>
+          </ul>
+        </details>
+        <details class="foot-col">
+          <summary>Hãng xe</summary>
+          <ul class="foot-brands" id="footBrands"></ul>
+        </details>
+        <details class="foot-col">
+          <summary>Dữ liệu và nguồn</summary>
+          <ul>
+            <li><a href="images/CREDITS.md">Nguồn và giấy phép ảnh</a></li>
+            <li><a href="https://github.com/DunoDrake/car-compare" target="_blank" rel="noopener noreferrer">Mã nguồn</a></li>
+          </ul>
+        </details>
+      </div>
       <p class="price-source" id="priceSource" hidden></p>
-      <p>Dữ liệu mang tính tham khảo (giá niêm yết ước tính theo tháng 10/2026, đơn vị triệu đồng). Thông số thực tế có thể thay đổi theo năm sản xuất và chính sách của hãng; vui lòng xác nhận lại với đại lý trước khi mua. Ảnh xe chỉ mang tính minh họa: ảnh render của hãng (ghi nguồn dưới ảnh) và ảnh <a href="images/CREDITS.md">Wikimedia Commons (xem nguồn và giấy phép từng ảnh)</a>.</p>
+      <p class="foot-note">Dữ liệu mang tính tham khảo (giá niêm yết ước tính theo tháng 10/2026, đơn vị triệu đồng). Thông số thực tế có thể thay đổi theo năm sản xuất và chính sách của hãng; vui lòng xác nhận lại với đại lý trước khi mua. Ảnh xe chỉ mang tính minh họa: ảnh render của hãng (ghi nguồn dưới ảnh) và ảnh Wikimedia Commons.</p>
     </div>
   </footer>
 
-  <script src="data/kia.js?v=20261016f"></script>
-  <script src="data/hyundai.js?v=20261016f"></script>
-  <script src="data/mitsubishi.js?v=20261016f"></script>
-  <script src="data/honda.js?v=20261016f"></script>
-  <script src="data/mazda.js?v=20261016f"></script>
-  <script src="data/audi.js?v=20261016f"></script>
-  <script src="data/mercedes.js?v=20261016f"></script>
-  <script src="data/bmw.js?v=20261016f"></script>
-  <script src="data/volkswagen.js?v=20261016f"></script>
-  <script src="data/ford.js?v=20261016f"></script>
-  <script src="data/toyota.js?v=20261016f"></script>
-  <script src="data/suzuki.js?v=20261016f"></script>
-  <script src="data/geely.js?v=20261016f"></script>
-  <script src="data/jaecoo.js?v=20261016f"></script>
-  <script src="data/lynkco.js?v=20261016f"></script>
-  <script src="data/mg.js?v=20261016f"></script>
-  <script src="data/vinfast.js?v=20261016f"></script>
-  <script src="data/specs-extra.js?v=20261016f"></script>
-  <script src="data/brochure.js?v=20261016f"></script>
-  <script src="data/images.js?v=20261016f"></script>
-  <script src="data/onroad.js?v=20261016f"></script>
-  <script src="data/reviews.js?v=20261016f"></script>
-  <script src="data/config.js?v=20261016f"></script>
-  <script src="js/app.js?v=20261016f"></script>
+  <script src="data/kia.js?v=20261016k"></script>
+  <script src="data/hyundai.js?v=20261016k"></script>
+  <script src="data/mitsubishi.js?v=20261016k"></script>
+  <script src="data/honda.js?v=20261016k"></script>
+  <script src="data/mazda.js?v=20261016k"></script>
+  <script src="data/audi.js?v=20261016k"></script>
+  <script src="data/mercedes.js?v=20261016k"></script>
+  <script src="data/bmw.js?v=20261016k"></script>
+  <script src="data/volkswagen.js?v=20261016k"></script>
+  <script src="data/ford.js?v=20261016k"></script>
+  <script src="data/toyota.js?v=20261016k"></script>
+  <script src="data/suzuki.js?v=20261016k"></script>
+  <script src="data/geely.js?v=20261016k"></script>
+  <script src="data/jaecoo.js?v=20261016k"></script>
+  <script src="data/lynkco.js?v=20261016k"></script>
+  <script src="data/mg.js?v=20261016k"></script>
+  <script src="data/vinfast.js?v=20261016k"></script>
+  <script src="data/specs-extra.js?v=20261016k"></script>
+  <script src="data/brochure.js?v=20261016k"></script>
+  <script src="data/images.js?v=20261016k"></script>
+  <script src="data/onroad.js?v=20261016k"></script>
+  <script src="data/reviews.js?v=20261016k"></script>
+  <script src="data/config.js?v=20261016k"></script>
+  <script src="js/app.js?v=20261016k"></script>
 </body>
 </html>
